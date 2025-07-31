@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roteiro Prático: Nomenclatura Anatômica</title>
+    <style>
+        /* Estilos Gerais */
+        :root {
+            --primary-color: #2c3e50; /* Azul escuro */
+            --secondary-color: #3498db; /* Azul claro */
+            --accent-color: #e67e22; /* Laranja */
+            --context-color: #8e44ad; /* Roxo para contexto */
+            --background-color: #ecf0f1; /* Cinza claro */
+            --text-color: #34495e; /* Cinza escuro */
+            --card-bg-color: #ffffff;
+            --instruction-bg: #fef5e7; /* Laranja bem claro */
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+        }
+
+        /* Menu de Navegação Lateral */
+        #side-nav {
+            width: 240px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            background-color: var(--primary-color);
+            padding-top: 20px;
+            overflow-y: auto;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        #side-nav h3 {
+            color: #ecf0f1;
+            text-align: center;
+            padding: 0 15px;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        
+        #side-nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #side-nav li a {
+            display: block;
+            color: #bdc3c7;
+            padding: 12px 20px;
+            text-decoration: none;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        #side-nav li a:hover {
+            background-color: #34495e;
+            color: #ffffff;
+        }
+
+        #side-nav li a.active {
+            background-color: #4a627a;
+            color: #ffffff;
+            font-weight: bold;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        /* Conteúdo Principal com margem para o menu */
+        .main-content {
+            margin-left: 240px;
+            width: calc(100% - 240px);
+        }
+        
+        /* Cabeçalho Único */
+        header {
+            background-color: var(--card-bg-color);
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: 4px solid var(--secondary-color);
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            margin: 0;
+            font-size: 2.2em;
+        }
+        
+        header h2 {
+            margin: 0.5rem 0 0;
+            font-size: 1.3em;
+            color: var(--text-color);
+            font-weight: normal;
+        }
+        
+        header .author-credit {
+            font-size: 1em;
+            color: #7f8c8d;
+            margin-top: 10px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        section {
+            background-color: var(--card-bg-color);
+            margin-bottom: 2rem;
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-left: 5px solid var(--secondary-color);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3.context-title {
+            color: var(--context-color);
+            margin-top: 2rem;
+            border-bottom: 2px solid #d2b4de;
+            padding-bottom: 8px;
+        }
+        
+        strong, b {
+            color: var(--primary-color);
+        }
+        
+        /* Caixa de Dica/Instrução */
+        .instruction-box {
+            background-color: var(--instruction-bg);
+            border: 1px solid #f5cba7;
+            border-left: 5px solid var(--accent-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+        .instruction-box p, .instruction-box li {
+            margin: 0;
+            color: #b9770e;
+        }
+        .instruction-box strong {
+            color: #b9770e;
+        }
+        .instruction-box ul {
+            list-style-type: '❓ ';
+            padding-left: 20px;
+            margin-top: 0.5rem;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: block;
+            margin: 1.5rem auto;
+            border: 1px solid #ddd;
+        }
+        
+        /* Cronômetro Flutuante */
+        #floating-timer {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #bdc3c7; /* Fundo cinza claro */
+            color: #d5d9dc; /* Texto cinza bem claro */
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 1001;
+            transition: all 0.3s ease;
+        }
+
+        #floating-timer:hover {
+            background-color: var(--accent-color); /* Fundo laranja no hover */
+            color: white; /* Texto branco no hover */
+        }
+
+        /* Rodapé */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        
+        footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsividade para smartphones */
+        @media (max-width: 900px) {
+            body {
+                display: block;
+            }
+            #side-nav {
+                width: 100%;
+                height: auto;
+                position: static;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="side-nav">
+        <h3>Seja bem vindo(a)!</h3>
+        <ul>
+            <li><a href="#intro">I. Introdução</a></li>
+            <li><a href="#principio1">II. Posição Anatômica</a></li>
+            <li><a href="#principio2">III. Planos de Secção</a></li>
+            <li><a href="#principio3">IV. Termos de Direção</a></li>
+            <li><a href="#sintese">V. Síntese</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <header>
+            <h1>Roteiro Prático de Investigação</h1>
+            <h2>Nomenclatura Anatômica Aplicada aos Vertebrados</h2>
+            <div class="author-credit">Elaborado por Prof. Conrado Galdino</div>
+        </header>
+
+        <main class="container">
+            <div id="floating-timer">Tempo: 80:00</div>
+
+            <section id="intro">
+                <h2><span class="step-number">I.</span> Introdução e Objetivos</h2>
+                <p>Nesta aula, vamos investigar os <strong>princípios fundamentais</strong> da nomenclatura anatômica. Em vez de decorar termos, sua missão será testar a validade e a necessidade de cada conceito, usando os diversos espécimes na bancada como seu campo de provas. O objetivo é entender a lógica por trás deste "idioma" universal da anatomia.</p>
+                <b>Objetivos:</b>
+                <ul>
+                    <li>Justificar a necessidade de uma nomenclatura padronizada na ciência.</li>
+                    <li>Definir e identificar a posição anatômica em diferentes grupos de vertebrados.</li>
+                    <li>Aplicar os planos de secção e os termos de direção para descrever a localização de estruturas.</li>
+                </ul>
+            </section>
+
+            <section id="principio1">
+                <h2><span class="step-number">II.</span> Princípio 1: A Necessidade de um Padrão</h2>
+                <h3 class="context-title">Proposição: "Sem uma posição de referência padronizada, qualquer descrição anatômica se torna ambígua e inútil."</h3>
+                <div class="instruction-box">
+                    <p><strong>Teste esta proposição:</strong></p>
+                    <ul>
+                        <li>Pegue o modelo de lagarto. Coloque-o de cabeça para baixo. Agora, tente descrever para seu colega a localização do coração usando apenas palavras como "em cima", "embaixo", "na frente". A descrição é clara?</li>
+                        <li>Agora, coloque o animal na <strong>posição anatômica</strong> (de pé, membros no chão, cabeça para frente). Repita a descrição usando os mesmos termos. A descrição melhorou?</li>
+                        <li>Isso demonstra a importância da <strong>posição anatômica</strong> como um ponto de partida universal. Identifique esta posição nos outros espécimes (peixe, ave, mamífero).</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="principio2">
+                <h2><span class="step-number">III.</span> Princípio 2: Os Eixos de Coordenadas</h2>
+                <h3 class="context-title">Proposição: "O corpo de qualquer vertebrado pode ser mapeado por três planos de secção perpendiculares entre si."</h3>
+                <div class="instruction-box">
+                    <p><strong>Verifique a universalidade dos planos:</strong></p>
+                    <ul>
+                        <li>Usando uma régua ou a mão, simule os três planos no modelo de peixe:
+                            <ul>
+                                <li><strong>Plano Sagital:</strong> Divide o corpo em metades direita e esquerda.</li>
+                                <li><strong>Plano Frontal (Coronal):</strong> Divide o corpo em partes dorsal (costas) e ventral (barriga).</li>
+                                <li><strong>Plano Transversal:</strong> Divide o corpo em partes cranial (cabeça) e caudal (cauda).</li>
+                            </ul>
+                        </li>
+                        <li>Agora, aplique os mesmos três planos a um modelo de tetrápode (lagarto ou mamífero). Os planos ainda funcionam? A orientação deles muda em relação ao substrato?</li>
+                    </ul>
+                </div>
+                <img src="https://storage.googleapis.com/gemini-prod/images/409d1373-a616-43b9-a2e6-a832c695a70c.jpg" alt="[Imagem de um peixe mostrando os planos de secção]" style="max-width: 600px;">
+            </section>
+
+            <section id="principio3">
+                <h2><span class="step-number">IV.</span> Princípio 3: A Linguagem da Localização</h2>
+                <h3 class="context-title">Proposição: "Um conjunto de termos direcionais opostos é suficiente para localizar qualquer estrutura em relação a outra."</h3>
+                <div class="instruction-box">
+                    <p><strong>Aplique os termos para validar a proposição:</strong></p>
+                    <ul>
+                        <li><strong>No esqueleto do lagarto:</strong>
+                            <ul>
+                                <li>A coluna vertebral é <strong>dorsal</strong> ou <strong>ventral</strong> em relação ao esterno (osso do peito)?</li>
+                                <li>O fêmur (osso da coxa) é <strong>proximal</strong> ou <strong>distal</strong> em relação aos ossos dos dedos (falanges)?</li>
+                                <li>As costelas são <strong>mediais</strong> ou <strong>laterais</strong> em relação à coluna vertebral?</li>
+                            </ul>
+                        </li>
+                         <li><strong>No peixe:</strong>
+                            <ul>
+                                 <li>A boca é <strong>ventral</strong> ou <strong>dorsal</strong>?</li>
+                                 <li>A nadadeira anal é <strong>cranial</strong> ou <strong>caudal</strong> em relação às nadadeiras pélvicas?</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <img src="https://storage.googleapis.com/gemini-prod/images/c0b29c97-3ac9-44e2-b7e1-b4f0ef393f9e.jpg" alt="[Imagem dos esquemas de eixos em um lagarto]" style="max-width: 500px;">
+            </section>
+            
+            <section id="sintese">
+                <h2><span class="step-number">V.</span> Síntese da Investigação</h2>
+                <div class="instruction-box">
+                    <p><strong>Sua Conclusão:</strong></p>
+                    <ul>
+                        <li>Com base nas suas investigações, escreva um parágrafo justificando por que a combinação de uma posição anatômica padrão, planos de secção e termos direcionais forma um sistema de comunicação preciso e essencial para a anatomia comparada.</li>
+                    </ul>
+                </div>
+                <p>Ao final desta investigação, fica claro que a nomenclatura anatômica não é um conjunto de termos para memorizar, mas uma ferramenta lógica e poderosa para a análise científica. Dominá-la é o primeiro passo para compreender as incríveis transformações evolutivas que estudaremos a seguir.</p>
+            </section>
+        </main>
+        <footer>
+            <p>Todos os direitos reservados. Powered by <a href="https://yaiah.com" target="_blank">Yaiah</a></p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- CRONÔMETRO FLUTUANTE ---
+            const timerDisplay = document.getElementById('floating-timer');
+            if (timerDisplay) {
+                let totalTime = 80 * 60; // 80 minutos em segundos
+
+                const countdown = setInterval(() => {
+                    if (totalTime <= 0) {
+                        clearInterval(countdown);
+                        timerDisplay.textContent = "Tempo Esgotado!";
+                        return;
+                    }
+
+                    totalTime--;
+                    const minutes = Math.floor(totalTime / 60);
+                    let seconds = totalTime % 60;
+                    seconds = seconds < 10 ? '0' + seconds : seconds;
+                    timerDisplay.textContent = `Tempo: ${minutes}:${seconds}`;
+
+                }, 1000);
+            }
+
+            // --- NAVEGAÇÃO ATIVA ---
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('#side-nav a');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
+

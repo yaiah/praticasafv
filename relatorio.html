@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Prático: Como Elaborar um Relatório Científico</title>
+    <style>
+        /* Estilos Gerais */
+        :root {
+            --primary-color: #2c3e50; /* Azul escuro */
+            --secondary-color: #3498db; /* Azul claro */
+            --accent-color: #e67e22; /* Laranja */
+            --context-color: #8e44ad; /* Roxo para contexto */
+            --background-color: #ecf0f1; /* Cinza claro */
+            --text-color: #34495e; /* Cinza escuro */
+            --card-bg-color: #ffffff;
+            --instruction-bg: #fef5e7; /* Laranja bem claro */
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+        }
+
+        /* Menu de Navegação Lateral */
+        #side-nav {
+            width: 240px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            background-color: var(--primary-color);
+            padding-top: 20px;
+            overflow-y: auto;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        #side-nav h3 {
+            color: #ecf0f1;
+            text-align: center;
+            padding: 0 15px;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        
+        #side-nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #side-nav li a {
+            display: block;
+            color: #bdc3c7;
+            padding: 12px 20px;
+            text-decoration: none;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        #side-nav li a:hover {
+            background-color: #34495e;
+            color: #ffffff;
+        }
+
+        #side-nav li a.active {
+            background-color: #4a627a;
+            color: #ffffff;
+            font-weight: bold;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        /* Conteúdo Principal com margem para o menu */
+        .main-content {
+            margin-left: 240px;
+            width: calc(100% - 240px);
+        }
+        
+        /* Cabeçalho Único */
+        header {
+            background-color: var(--card-bg-color);
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: 4px solid var(--secondary-color);
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            margin: 0;
+            font-size: 2.2em;
+        }
+        
+        header h2 {
+            margin: 0.5rem 0 0;
+            font-size: 1.3em;
+            color: var(--text-color);
+            font-weight: normal;
+        }
+        
+        header .author-credit {
+            font-size: 1em;
+            color: #7f8c8d;
+            margin-top: 10px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        section {
+            background-color: var(--card-bg-color);
+            margin-bottom: 2rem;
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-left: 5px solid var(--secondary-color);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3.context-title {
+            color: var(--context-color);
+            margin-top: 2rem;
+            border-bottom: 2px solid #d2b4de;
+            padding-bottom: 8px;
+        }
+        
+        strong, b {
+            color: var(--primary-color);
+        }
+        
+        /* Caixa de Dica/Instrução */
+        .instruction-box {
+            background-color: var(--instruction-bg);
+            border: 1px solid #f5cba7;
+            border-left: 5px solid var(--accent-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+        .instruction-box p, .instruction-box li {
+            margin: 0;
+            color: #b9770e;
+        }
+        .instruction-box strong {
+            color: #b9770e;
+        }
+        .instruction-box ul {
+            list-style-type: '❓ ';
+            padding-left: 20px;
+            margin-top: 0.5rem;
+        }
+        
+        /* Cronômetro Flutuante */
+        #floating-timer {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #bdc3c7; /* Fundo cinza claro */
+            color: #d5d9dc; /* Texto cinza bem claro */
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 1001;
+            transition: all 0.3s ease;
+        }
+
+        #floating-timer:hover {
+            background-color: var(--accent-color); /* Fundo laranja no hover */
+            color: white; /* Texto branco no hover */
+        }
+
+        /* Rodapé */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        
+        footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsividade para smartphones */
+        @media (max-width: 900px) {
+            body {
+                display: block;
+            }
+            #side-nav {
+                width: 100%;
+                height: auto;
+                position: static;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="side-nav">
+        <h3>Seja bem vindo(a)!</h3>
+        <ul>
+            <li><a href="#intro">I. Introdução</a></li>
+            <li><a href="#objetivos">II. Objetivos</a></li>
+            <li><a href="#metodos">III. Métodos</a></li>
+            <li><a href="#resultados">IV. Resultados</a></li>
+            <li><a href="#discussao">V. Discussão</a></li>
+            <li><a href="#conclusao">VI. Conclusão</a></li>
+            <li><a href="#referencias">VII. Referências</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <header>
+            <h1>Guia Prático</h1>
+            <h2>Como Elaborar um Relatório de Aulas Práticas</h2>
+            <div class="author-credit">Elaborado por Prof. Conrado Galdino</div>
+        </header>
+
+        <main class="container">
+            <div id="floating-timer">Tempo: 60:00</div>
+
+            <section id="intro">
+                <h2><span class="step-number">I.</span> Introdução</h2>
+                <h3 class="context-title">Proposição: "Um relatório científico precisa de uma introdução para situar o leitor e justificar a relevância do estudo."</h3>
+                <p>A introdução é o seu cartão de visitas. Ela deve responder, objetivamente, à pergunta implícita do leitor: "Por que eu deveria me importar com este trabalho?".</p>
+                 
+                <div class="instruction-box">
+                    <p><strong>Questões para construir sua introdução (máx. 350 palavras):</strong></p>
+                    <ul>
+                        <li>Qual é o "grande tema" em que sua aula prática se insere? (Ex: Fisiologia vegetal, Anatomia comparada, etc.)</li>
+                        <li>Que conhecimento fundamental (da literatura, de aulas teóricas) é necessário para entender a prática que você realizou?</li>
+                        <li>Qual é a questão que sua aula prática busca responder ou demonstrar?</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="objetivos">
+                <h2><span class="step-number">II.</span> Objetivos</h2>
+                <h3 class="context-title">Proposição: "Os objetivos declaram de forma clara e direta o propósito da investigação."</h3>
+                <p>Esta seção é a mais direta do relatório. Ela funciona como um "contrato": é aqui que você informa ao leitor exatamente o que se propôs a fazer.</p>
+                <div class="instruction-box">
+                    <p><strong>Como apresentar seus objetivos:</strong></p>
+                    <ul>
+                        <li>Os objetivos são sempre fornecidos pelo professor no roteiro da aula.</li>
+                        <li>Transcreva-os para o seu relatório exatamente como foram apresentados.</li>
+                        <li>Utilize sempre verbos no infinitivo (Ex: "Identificar...", "Comparar...", "Analisar...").</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="metodos">
+                <h2><span class="step-number">III.</span> Métodos</h2>
+                <h3 class="context-title">Proposição: "A credibilidade de um resultado científico depende diretamente da clareza e da reprodutibilidade do método."</h3>
+                <p>A seção de Métodos deve ser um manual de instruções tão claro que outro cientista, em qualquer lugar do mundo, possa repetir seu trabalho e (idealmente) obter os mesmos resultados. O texto deve ser impessoal e no tempo pretérito.</p>
+                <div class="instruction-box">
+                    <p><strong>Questões para guiar a escrita dos seus Métodos:</strong></p>
+                    <ul>
+                        <li>Que organismos ou materiais principais foram utilizados? (Mencione-os no texto, não em lista).</li>
+                        <li>Que procedimentos foram executados, passo a passo?</li>
+                        <li>Que equipamentos foram necessários para as medições ou observações?</li>
+                        <li>Como os dados foram registrados e analisados?</li>
+                        <li><strong>Exemplo:</strong> <em>"Amostras de tecido foram fixadas em formalina e, posteriormente, submetidas a cortes histológicos com 5µm de espessura utilizando um <strong>micrótomo</strong>. As lâminas foram coradas com hematoxilina e eosina e analisadas em um <strong>microscópio óptico</strong> com aumentos de 40x e 100x."</em></li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section id="resultados">
+                <h2><span class="step-number">IV.</span> Resultados</h2>
+                <h3 class="context-title">Proposição: "Resultados são a apresentação pura e objetiva dos dados coletados, sem qualquer tipo de interpretação."</h3>
+                <p>Esta é a seção mais "crua" do seu relatório. Aqui, você é um repórter: apenas descreve o que viu e mediu. A interpretação do "porquê" virá depois.</p>
+                <div class="instruction-box">
+                    <p><strong>Como apresentar seus resultados:</strong></p>
+                    <ul>
+                        <li>Descreva suas observações de forma direta. Ex: <em>"As células da epiderme apresentaram formato irregular, enquanto as do parênquima eram isodiamétricas."</em></li>
+                        <li>Caso necessário utilize tabelas e gráficos para apresentar dados quantitativos de forma clara.</li>
+                        <li>Toda figura (desenho, foto, gráfico) ou tabela deve ser numerada e possuir um título e uma legenda explicativa.</li>
+                        <li><strong>Lembre-se:</strong> Nesta seção, você nunca explica o porquê dos resultados. Apenas os apresenta.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="discussao">
+                <h2><span class="step-number">V.</span> Discussão</h2>
+                <h3 class="context-title">Proposição: "A discussão é a alma do relatório, onde os dados ganham significado ao serem conectados com o conhecimento teórico."</h3>
+                <p>Se os Resultados respondem "O quê?", a Discussão responde "E daí?". É aqui que você demonstra seu raciocínio científico, interpretando seus achados à luz da teoria. Esta seção deve ser breve e focada, como a introdução.</p>
+                <div class="instruction-box">
+                    <p><strong>Para construir sua introdução não exceda 450 palavras</strong></p>
+                    <p><strong>Questões para guiar sua Discussão:</strong></p>
+                    <ul>
+                        <li>Seus resultados confirmam o que era esperado segundo a literatura? Como?</li>
+                        <li>Houve algum resultado inesperado? Qual poderia ser a explicação para isso (e.g., erro experimental, variação biológica)?</li>
+                        <li>Como seus resultados respondem diretamente aos objetivos propostos no início do relatório?</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="conclusao">
+                <h2><span class="step-number">VI.</span> Conclusão</h2>
+                <h3 class="context-title">Proposição: "A conclusão sintetiza a mensagem principal do estudo de forma concisa."</h3>
+                <p>Em um ou dois parágrafos, resuma a resposta para a questão central da sua investigação. É a sua "mensagem final" para o leitor.</p>
+                <div class="instruction-box">
+                    <p><strong>Como escrever sua Conclusão:</strong></p>
+                    <ul>
+                        <li>Retome os objetivos de forma sucinta e afirme se foram alcançados.</li>
+                        <li>Apresente a principal descoberta ou confirmação da sua prática.</li>
+                        <li>Não introduza nenhuma informação ou discussão nova.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="referencias">
+                <h2><span class="step-number">VII.</span> Referências Bibliográficas</h2>
+                <h3 class="context-title">Proposição: "A ciência se constrói sobre o trabalho de outros; portanto, todo conhecimento utilizado deve ser devidamente creditado."</h3>
+                <p>Qualquer fonte de informação (livros, artigos, atlas) que você citou na sua Introdução ou Discussão deve ser listada aqui, seguindo um padrão de formatação (geralmente ABNT).</p>
+            </section>
+        </main>
+        <footer>
+            <p>Todos os direitos reservados. Powered by <a href="https://yaiah.com" target="_blank">Yaiah</a></p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- CRONÔMETRO FLUTUANTE ---
+            const timerDisplay = document.getElementById('floating-timer');
+            if (timerDisplay) {
+                let totalTime = 60 * 60; // 60 minutos em segundos
+
+                const countdown = setInterval(() => {
+                    if (totalTime <= 0) {
+                        clearInterval(countdown);
+                        timerDisplay.textContent = "Tempo Esgotado!";
+                        return;
+                    }
+
+                    totalTime--;
+                    const minutes = Math.floor(totalTime / 60);
+                    let seconds = totalTime % 60;
+                    seconds = seconds < 10 ? '0' + seconds : seconds;
+                    timerDisplay.textContent = `Tempo: ${minutes}:${seconds}`;
+
+                }, 1000);
+            }
+
+            // --- NAVEGAÇÃO ATIVA ---
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('#side-nav a');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
+

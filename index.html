@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Índice do Curso: Anatomia Funcional de Vertebrados</title>
+    <style>
+        /* Estilos Gerais */
+        :root {
+            --primary-color: #2c3e50; /* Azul escuro */
+            --secondary-color: #3498db; /* Azul claro */
+            --accent-color: #e67e22; /* Laranja */
+            --atlas-color: #f39c12; /* Laranja claro para Atlas */
+            --background-color: #ecf0f1; /* Cinza claro */
+            --text-color: #34495e; /* Cinza escuro */
+            --card-bg-color: #ffffff;
+            --available-color: #27ae60; /* Verde para links disponíveis */
+            --unavailable-color: #bdc3c7; /* Cinza para links indisponíveis */
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+        }
+
+        /* Menu de Navegação Lateral */
+        #side-nav {
+            width: 240px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            background-color: var(--primary-color);
+            padding-top: 20px;
+            overflow-y: auto;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        #side-nav h3 {
+            color: #ecf0f1;
+            text-align: center;
+            padding: 0 15px;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        
+        #side-nav .nav-description {
+            color: #bdc3c7;
+            font-size: 0.85em;
+            padding: 0 15px;
+            line-height: 1.4;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        /* Conteúdo Principal com margem para o menu */
+        .main-content {
+            margin-left: 240px;
+            width: calc(100% - 240px);
+        }
+        
+        /* Cabeçalho Único */
+        header {
+            background-color: var(--card-bg-color);
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: 4px solid var(--secondary-color);
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            margin: 0;
+            font-size: 2.2em;
+        }
+        
+        header h2 {
+            margin: 0.5rem 0 0;
+            font-size: 1.3em;
+            color: var(--text-color);
+            font-weight: normal;
+        }
+        
+        header .author-credit {
+            font-size: 1em;
+            color: #7f8c8d;
+            margin-top: 10px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Lista de Tópicos */
+        .topic-list-container {
+            background-color: var(--card-bg-color);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .topic-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .topic-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0;
+            border-bottom: 1px solid #e0e0e0;
+            gap: 15px;
+        }
+        
+        .topic-item:last-child {
+            border-bottom: none;
+        }
+
+        .topic-name {
+            font-size: 1.1em;
+            font-weight: 500;
+            flex-grow: 1;
+        }
+
+        .topic-actions {
+            display: flex;
+            gap: 10px;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            text-decoration: none;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            font-weight: bold;
+            transition: opacity 0.3s, background-color 0.3s;
+            white-space: nowrap;
+        }
+
+        /* Estilos para itens disponíveis */
+        .topic-item.available .topic-name {
+            color: var(--primary-color);
+        }
+        .topic-item.available .action-btn.aula {
+            background-color: var(--available-color); /* Botão verde */
+        }
+        .topic-item.available .action-btn.aula:hover {
+            opacity: 0.85;
+        }
+        .topic-item.available .action-btn.atlas {
+            background-color: var(--atlas-color); /* Botão laranja claro */
+        }
+        .topic-item.available .action-btn.atlas:hover {
+            opacity: 0.85;
+        }
+        .topic-item.available .action-btn.submit {
+            background-color: var(--secondary-color); /* Botão azul */
+        }
+        .topic-item.available .action-btn.submit:hover {
+            opacity: 0.85;
+        }
+
+        /* Estilos para itens indisponíveis */
+        .topic-item.unavailable .topic-name {
+            color: var(--unavailable-color);
+        }
+        .topic-item.unavailable .action-btn {
+            background-color: var(--unavailable-color);
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        
+        /* Rodapé */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        
+        footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsividade para smartphones */
+        @media (max-width: 900px) {
+            body {
+                display: block;
+            }
+            #side-nav {
+                width: 100%;
+                height: auto;
+                position: static;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+            .container {
+                padding: 1rem;
+            }
+            .topic-item {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+            .topic-actions {
+                justify-content: flex-start;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <nav id="side-nav">
+        <h3>Seja bem vindo(a)!</h3>
+        <p class="nav-description">
+            Este é nosso webapp que será o seu guia para aulas práticas de Anatomia Funcional de Vertebrados.
+            Aqui o aluno encontra todos os roteiros para as aulas práticas e os links para postar as atividades no Canvas!
+        </p>
+    </nav>
+
+    <div class="main-content">
+        <header>
+            <h1>Anatomia Funcional de Vertebrados</h1>
+            <h2>Índice de Aulas Práticas</h2>
+            <div class="author-credit">Elaborado por Prof. Conrado Galdino</div>
+        </header>
+        
+        <div class="container">
+            <main class="topic-list-container">
+                <ul class="topic-list">
+                    <!-- Para cada item, a classe 'available' ou 'unavailable' controla o estilo -->
+                    
+                    <li class="topic-item available">
+                        <span class="topic-name">Como fazer um relatório de aula prática</span>
+                        <div class="topic-actions">
+                            <a href="relatorio.html" class="action-btn aula" target="_blank">Acessar Tópico</a>
+                            <a href="#" class="action-btn submit" target="_blank">Enviar Relat. (G1)</a>
+                            <a href="#" class="action-btn submit" target="_blank">Enviar Relat. (G2)</a>
+                        </div>
+                    </li>
+                    <li class="topic-item available">
+                        <span class="topic-name">Nomenclatura Anatômica Zoológica</span>
+                        <div class="topic-actions">
+                            <a href="#" class="action-btn aula" target="_blank">Acessar Tópico</a>
+                            <a href="#" class="action-btn submit" target="_blank">Enviar Relat. (G1)</a>
+                            <a href="#" class="action-btn submit" target="_blank">Enviar Relat. (G2)</a>
+                        </div>
+                    </li>
+                    <li class="topic-item available">
+                        <span class="topic-name">Características gerais dos vertebrados</span>
+                        <div class="topic-actions">
+                            <a href="#" class="action-btn aula" target="_blank">Acessar Roteiro</a>
+                            <a href="#" class="action-btn submit" target="_blank">Enviar Relat. (G1)</a>
+                            <a href="#" class="action-btn submit" target="_blank">Enviar Relat. (G2)</a>
+                        </div>
+                    </li>
+                    <li class="topic-item available">
+                        <span class="topic-name">Histologia do tegumento</span>
+                        <div class="topic-actions">
+                            <a href="#" class="action-btn aula">Acessar Aula</a>
+                            <a href="#" class="action-btn atlas">Acessar Atlas</a>
+                            <a href="#" class="action-btn submit">Enviar Relat. (G1)</a>
+                            <a href="#" class="action-btn submit">Enviar Relat. (G2)</a>
+                        </div>
+                    </li>
+                    <li class="topic-item unavailable">
+                        <span class="topic-name">Morfologia macroscópica do tegumento</span>
+                        <div class="topic-actions">
+                            <a href="#" class="action-btn aula">Em Breve</a>
+                            <a href="#" class="action-btn atlas">Indisponível</a>
+                            <a href="#" class="action-btn submit">Enviar Relat. (G1)</a>
+                            <a href="#" class="action-btn submit">Enviar Relat. (G2)</a>
+                        </div>
+                    </li>
+                    <li class="topic-item unavailable">
+                        <span class="topic-name">Condrocrânio</span>
+                        <div class="topic-actions">
+                            <a href="#" class="action-btn aula">Em Breve</a>
+                            <a href="#" class="action-btn atlas">Indisponível</a>
+                            <a href="#" class="action-btn submit">Enviar Relat. (G1)</a>
+                            <a href="#" class="action-btn submit">Enviar Relat. (G2)</a>
+                        </div>
+                    </li>
+                    <li class="topic-item unavailable">
+                        <span class="topic-name">Dermatocrânio</span>
+                        <div class="topic-actions">
+                            <a href="#" class="action-btn aula">Em Breve</a>
+                            <a href="#" class="action-btn atlas">Indisponível</a>
+                            <a href="#" class="action-btn submit">Enviar Relat. (G1)</a>
+                            <a href="#" class="action-btn submit">Enviar Relat. (G2)</a>
+                        </div>
+                    </li>
+                    <li class="topic-item unavailable">
+                        <span class="topic-name">Esplancnocrânio</span>
+                        <div class="topic-actions">
+                            <a href="#" class="action-btn aula">Em Breve</a>
+                            <a href="#" class="action-btn atlas">Indisponível</a>
+                            <a href="#" class="action-btn submit">Enviar Relat. (G1)</a>
+                            <a href="#" class="action-btn submit">Enviar Relat. (G2)</a>
+                        </div>
+                    </li>
+                    <li class="topic-item unavailable">
+                        <span class="topic-name">Esqueleto axial pós-craniano</span>
+                        <div class="topic-actions">
+                            <a href="#" class="action-btn aula">Em Breve</a>
+                            <a href="#" class="action-btn atlas">Indisponível</a>
+                            <a href="#" class="action-btn submit">Enviar Relat. (G1)</a>
+                            <a href="#" class="action-btn submit">Enviar Relat. (G2)</a>
+                        </div>
+                    </li>
+                    <li class="topic-item unavailable">
+                        <span class="topic-name">Esqueleto apendicular</span>
+                        <div class="topic-actions">
+                            <a href="#" class="action-btn aula">Em Breve</a>
+                            <a href="#" class="action-btn atlas">Indisponível</a>
+                            <a href="#" class="action-btn submit">Enviar Relat. (G1)</a>
+                            <a href="#" class="action-btn submit">Enviar Relat. (G2)</a>
+                        </div>
+                    </li>
+                    <li class="topic-item unavailable">
+                        <span class="topic-name">Circulatório e Respiratório</span>
+                        <div class="topic-actions">
+                            <a href="#" class="action-btn aula">Em Breve</a>
+                            <a href="#" class="action-btn atlas">Indisponível</a>
+                            <a href="#" class="action-btn submit">Enviar Relat. (G1)</a>
+                            <a href="#" class="action-btn submit">Enviar Relat. (G2)</a>
+                        </div>
+                    </li>
+                </ul>
+            </main>
+        </div>
+        <footer>
+            <p>Todos os direitos reservados. Powered by <a href="https://yaiah.com" target="_blank">Yaiah</a></p>
+        </footer>
+    </div>
+
+</body>
+</html>
+
