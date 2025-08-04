@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roteiro Prático: O que define um Vertebrado?</title>
+    <style>
+        /* Estilos Gerais */
+        :root {
+            --primary-color: #2c3e50; /* Azul escuro */
+            --secondary-color: #3498db; /* Azul claro */
+            --accent-color: #e67e22; /* Laranja */
+            --background-color: #ecf0f1; /* Cinza claro */
+            --text-color: #34495e; /* Cinza escuro */
+            --card-bg-color: #ffffff;
+            --instruction-bg: #fffbe6; /* Amarelo claro para instruções */
+            --correct-answer-bg: #d4edda; /* Verde claro para acerto */
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+        }
+
+        /* Menu de Navegação Lateral */
+        #side-nav {
+            width: 240px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            background-color: var(--primary-color);
+            padding-top: 20px;
+            overflow-y: auto;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        #side-nav h3 {
+            color: #ecf0f1;
+            text-align: center;
+            padding: 0 15px;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        #side-nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #side-nav li a {
+            display: block;
+            color: #bdc3c7;
+            padding: 12px 20px;
+            text-decoration: none;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        #side-nav li a:hover {
+            background-color: #34495e;
+            color: #ffffff;
+        }
+
+        #side-nav li a.active {
+            background-color: #4a627a;
+            color: #ffffff;
+            font-weight: bold;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        /* Conteúdo Principal com margem para o menu */
+        .main-content {
+            margin-left: 240px;
+            width: calc(100% - 240px);
+        }
+
+        /* Cabeçalho */
+        header {
+            background-color: var(--card-bg-color);
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: 4px solid var(--secondary-color);
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            margin: 0;
+            font-size: 2.2em;
+        }
+        
+        header h2 {
+            margin: 0.5rem 0 0;
+            font-size: 1.3em;
+            color: var(--text-color);
+            font-weight: normal;
+        }
+
+        main {
+            padding: 1rem;
+            max-width: 900px;
+            margin: 2rem auto;
+        }
+
+        section {
+            background-color: var(--card-bg-color);
+            margin-bottom: 2rem;
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-left: 5px solid var(--secondary-color);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        
+        h2 .time-suggestion {
+            font-size: 0.7em;
+            color: var(--text-color);
+            font-weight: normal;
+            float: right;
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            margin-top: 2rem;
+        }
+        
+        strong, b {
+            color: var(--primary-color);
+        }
+        
+        ul {
+            list-style-type: '✔ ';
+            padding-left: 20px;
+        }
+
+        /* Estilos para imagens e caixas de instrução */
+        article {
+            margin-bottom: 1.5rem;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: block;
+            margin: 1.5rem auto;
+            border: 1px solid #ddd;
+        }
+
+        .instruction-box {
+            background-color: var(--instruction-bg);
+            border: 1px solid #f6e05e;
+            border-left: 5px solid #f6e05e;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+        .instruction-box p, .instruction-box li {
+            margin: 0;
+            color: #b7791f;
+        }
+        .instruction-box strong {
+            color: #975a16;
+        }
+        .instruction-box ul {
+            list-style-type: '👉 ';
+            padding-left: 20px;
+            margin-top: 0.5rem;
+        }
+
+        /* Galeria para a seção de diversidade */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery article {
+            background: #fdfdfd;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .gallery article h4 {
+            color: var(--primary-color);
+            margin-top: 0;
+            text-align: center;
+        }
+
+        /* Tabela de Síntese Interativa */
+        .table-container {
+            overflow-x: auto;
+            margin-top: 1.5rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+            min-width: 120px;
+        }
+        thead {
+            background-color: var(--primary-color);
+            color: var(--card-bg-color);
+            font-weight: bold;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .interactive-select {
+            width: 100%;
+            padding: 6px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            background-color: white;
+            cursor: pointer;
+        }
+        .correct-cell {
+            background-color: var(--correct-answer-bg) !important;
+        }
+        .interactive-select:disabled {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border: none;
+            background: transparent;
+            font-weight: bold;
+            color: #34495e;
+        }
+
+        #floating-timer {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 1em;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 1001;
+        }
+
+        /* Rodapé */
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            background-color: var(--primary-color);
+            color: #bdc3c7;
+            font-size: 0.9em;
+        }
+
+        /* Responsividade */
+        @media (max-width: 900px) {
+            body {
+                display: block;
+            }
+            #side-nav {
+                width: 100%;
+                height: auto;
+                position: static;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+            main {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="side-nav">
+        <h3>Navegação</h3>
+        <ul>
+            <li><a href="#intro">I. Introdução</a></li>
+            <li><a href="#step1">II. Parentes Próximos</a></li>
+            <li><a href="#step2">III. A Fronteira Craniata</a></li>
+            <li><a href="#proposicao">IV. Proposições</a></li>
+            <li><a href="#sintese">V. Síntese</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <header>
+            <h1>Roteiro Prático: O que define um Vertebrado?</h1>
+            <h2>Uma investigação sobre nossas origens</h2>
+        </header>
+
+        <div id="floating-timer">Tempo: 80:00</div>
+
+        <main>
+            <section id="intro">
+                <h2><span class="step-number">I.</span> Introdução e Objetivos <span class="time-suggestion">(~10 min)</span></h2>
+                <p>Bem-vindo, explorador(a) da diversidade animal! Nesta aula prática, nossa missão é desvendar as características que definem o grupo <strong>Vertebrata</strong>, situando-o em seu devido lugar na árvore da vida. Ao final dos 80 minutos, você será capaz de:</p>
+                <ul>
+                    <li>Identificar as apomorfias (novidades evolutivas) chave dos vertebrados.</li>
+                    <li>Diferenciar um vertebrado de outros cordados e deuterostomados.</li>
+                    <li>Reconhecer a unidade e a diversidade do plano corporal dos vertebrados.</li>
+                </ul>
+                <p>Seu material de apoio são os espécimes na bancada, os <strong>Atlas de AFV</strong>. Use este roteiro como seu guia. Vamos começar!</p>
+            </section>
+
+            <section id="step1">
+                <h2><span class="step-number">II.</span> Analisando os Parentes Próximos <span class="time-suggestion">(~20 min)</span></h2>
+                <p>Para entender o que é um vertebrado, primeiro precisamos conhecer quem <strong>não</strong> é. Todos os animais desta seção são <strong>Deuterostomados</strong>, assim como nós, mas eles nos mostram o caminho evolutivo até o surgimento das nossas características.</p>
+                
+                <article>
+                    <h3>A. Estrela-do-mar (Filo Echinodermata)</h3>
+                    <p>A estrela-do-mar é nossa "prima" deuterostomada mais distante na bancada. Note sua simetria radial no adulto e seu endoesqueleto de placas calcárias logo abaixo da pele.</p>
+                    <div class="instruction-box">
+                        <p><strong>Na Bancada:</strong> Observe o exemplar de estrela-do-mar. Toque em sua superfície e tente sentir a rigidez do seu esqueleto interno.</p>
+                        <ul>
+                            <li>Este animal possui alguma das 4 características de cordado (notocorda, tubo nervoso dorsal, fendas faríngeas, cauda pós-anal)?</li>
+                            <li>Ele tem uma cabeça centralizada com um crânio?</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article>
+                    <h3>B. Ascídia (Filo Urochordata / Tunicata)</h3>
+                    <p>As ascídias são cordados, mas sua anatomia adulta pode nos enganar. O adulto é séssil e parece uma bolsa filtradora. Contudo, sua larva é livre-natante e possui todas as características de cordado!</p>
+                    <div class="instruction-box">
+                        <p><strong>Na Bancada:</strong> Observe o espécime adulto de ascídia. Ele é o nosso parente vivo mais próximo!</p>
+                        <ul>
+                            <li>No animal adulto, você consegue identificar uma <strong>coluna vertebral</strong> ou um <strong>crânio</strong> definido?</li>
+                             <li>Por que, mesmo sem essas características no adulto, ele é considerado mais próximo de nós do que o anfioxo? (Dica: pense na genética e na forma larval).</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article>
+                    <h3>C. Anfioxo (Filo Cephalochordata)</h3>
+                    <p>O anfioxo é o modelo de um cordado "clássico", mantendo as 4 características por toda a vida. Ele não é um vertebrado, e entender o porquê é o passo crucial desta aula.</p>
+                    <img src="anfioxo.png" alt="[Imagem de Anfioxo]">
+                    <div class="instruction-box">
+                        <p><strong>Na Bancada:</strong> Observe o anfioxo no vidro e a lâmina histológica no microscópio.</p>
+                        <ul>
+                            <li><strong>No microscópio:</strong> Identifique a <strong>notocorda</strong> (um bastão celular grande e central), as <strong>fendas faríngeas</strong> (cortes na região da faringe). Também observe os pacotes musculares em forma de "V".</li>
+                            <li><strong>Questão Central:</strong> O anfioxo possui vértebras mineralizadas formando uma coluna? E um crânio protegendo a extremidade anterior do tubo nervoso? A resposta a estas duas perguntas define a fronteira para o próximo grupo.</li>
+                        </ul>
+                    </div>
+                </article>
+            </section>
+
+            <section id="step2">
+                <h2><span class="step-number">III.</span> A Fronteira: O Surgimento dos Craniata <span class="time-suggestion">(~20 min)</span></h2>
+                <p>Agora, vamos analisar um animal que representa os primeiros passos na evolução dos vertebrados: a lampreia. O grupo ao qual ela pertence (Agnatha) é o mais basal dos vertebrados vivos. Ela é um <strong>Craniata<strong>, mas não um <strong>Gnathostomata</strong> (vertebrado com mandíbula).</p>
+               
+                <article>
+                    <h3>A. A Lampreia e o Crânio</h3>
+                    <div class="instruction-box">
+                        <p><strong>Na Bancada e nos Atlas:</strong> Observe o exemplar de lampreia em via úmida. Ela é um "agnato", ou seja, um vertebrado sem mandíbulas. Use os Atlas para visualizar as estruturas internas que não são visíveis externamente.</p>
+                         <ul>
+                            <li><strong>O Crânio (A Apomorfia Chave):</strong> Diferente do anfioxo, a lampreia possui um <strong>crânio</strong> cartilaginoso que envolve e protege o encéfalo e os órgãos dos sentidos. Por isso, Vertebrata também é chamado de <strong>Craniata</strong>. Consulte o <strong>Atlas 1 (pg. 29-30)</strong> para visualizar a organização básica de um crânio.</li>
+                        </ul>
+                    </div>
+                </article>
+                <article>
+                    <h3>B. E as Vértebras? Uma Apomorfia Complicada</h3>
+                    <div class="instruction-box">
+                        <p><strong>Re-examine a Lampreia:</strong> Se "vertebrado" significa "aquele que tem vértebras", a lampreia se encaixa perfeitamente? </p>
+                         <ul>
+                            <li>Ela não possui uma coluna vertebral ossificada como a nossa. Em vez disso, apresenta apenas pequenas peças de cartilagem posicionadas dorsalmente sobre a notocorda. 
+                            <li><strong>Ponto de Reflexão:</strong> Se os primeiros vertebrados não tinham vértebras "típicas", a presença de vértebras é realmente a melhor característica para definir o grupo como um todo? Ou a presença do <strong>crânio</strong> (Craniata) seria uma apomorfia mais universal e, portanto, mais adequada?</li>
+                        </ul>
+                    </div>
+                </article>
+            </section>
+
+            <section id="step3">
+                <h2><span class="step-number">IV.</span> Explorando a Diversidade dos Vertebrados <span class="time-suggestion">(~20 min)</span></h2>
+                <p>Agora, vamos confirmar a presença e a diversidade do <strong>crânio</strong> e da <strong>coluna vertebral</strong> nos principais grupos de vertebrados com mandíbula (Gnathostomata). O objetivo aqui é simples: reconhecer estas duas estruturas fundamentais em diferentes formas.</p>
+
+                <div class="instruction-box">
+                    <p><strong>Na Bancada:</strong> Percorra as estações com os seguintes grupos. Para cada um, seu objetivo é identificar claramente o <strong>crânio</strong> e a <strong>coluna vertebral</strong>. Use os Atlas para ajudar na identificação geral.</p>
+                </div>
+
+                <div class="gallery">
+                    <article>
+                        <h4>Peixes Cartilaginosos e Ósseos</h4>
+                        <p>Observe os exemplares e os esqueletos completos sobre a bancada.</p>
+                        <img src="fish.jpg" alt="[Imagem de esqueleto de peixe]">
+                    </article>
+                    <article>
+                        <h4>Anfíbios (Sapo)</h4>
+                        <p>No esqueleto do sapo, localize o crânio e a coluna vertebral, que é notavelmente curta e especializada.</p>
+                        <img src="frog.jpg" alt="[Imagem de esqueleto de anuro]">
+                    </article>
+                    <article>
+                        <h4>Répteis e Aves</h4>
+                        <p>Explore a diversidade de formas de crânios e colunas vertebrais nos espécimes de lagartos, serpentes, tartarugas e aves.
+                         <img src="bskull.jpg" alt="[Imagem de crânio de ave]">
+                    </article>
+                    <article>
+                        <h4>Mamíferos</h4>
+                        <p>Identifique o crânio e a coluna vertebral no esqueleto de mamífero. Note como estas estruturas são robustas.</p>
+                        <img src="mskull.jpg" alt="[Imagem de crânio de mamífero]">
+                    </article>
+                </div>
+            </section>
+            <section id="proposicao">
+                <h2><span class="step-number">II.</span> Proposição 1: "A Notocorda é a característica que une os Chordata, mas não é exclusiva deles."</h2>
+                <h3 class="context-title">Investigando o Plano Corporal Chordata</h3>
+                <p>Para entender os vertebrados, precisamos primeiro entender os Cordados. O anfioxo é nosso modelo ideal.</p>
+                <div class="instruction-box">
+                    <p><strong>Encontre as evidências no laboratório:</strong></p>
+                    <ul>
+                        <li><strong>No microscópio (lâmina de anfioxo):</strong> Identifique as 4 características clássicas de Chordata: <strong>notocorda</strong>, <strong>tubo nervoso dorsal</strong>, <strong>fendas faríngeas</strong> e <strong>cauda pós-anal</strong>. Desenhe o que você vê.</li>
+                        <li><strong>Na bancada (ascídia):</strong> O adulto parece um cordado? Lembre-se que a larva possui todas as 4 características. Isso mostra que a presença dessas estruturas pode variar durante o ciclo de vida.</li>
+                         <li><strong>Na bancada (estrela-do-mar):</strong> Este é um Deuterostomado, mas não um Cordado. Você consegue encontrar alguma das 4 características nele? Sua ausência ajuda a definir os limites do grupo Chordata.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="proposicao">
+                <h2><span class="step-number">III.</span> Proposição 2: "A principal inovação que separa os Vertebrados dos outros Cordados é o desenvolvimento de uma cabeça complexa."</h2>
+                <h3 class="context-title">Testando a Apomorfia "Craniata"</h3>
+                <p>A grande novidade evolutiva não foi a coluna vertebral, mas a "cefalização": a concentração de estruturas sensoriais e neurais na região anterior do corpo, protegidas por um crânio.</p>
+                <div class="instruction-box">
+                    <p><strong>Compare o Anfioxo com a Lampreia:</strong></p>
+                    <ul>
+                        <li>O anfioxo tem uma cabeça? Ele possui olhos com lentes, narinas pareadas ou um encéfalo complexo?</li>
+                        <li>Agora, observe a lampreia. Mesmo sem mandíbulas, ela possui olhos bem desenvolvidos e uma cabeça distinta. A presença de um <strong>crânio</strong> cartilaginoso que protege o encéfalo na lampreia (e sua ausência no anfioxo) é a evidência chave que sustenta a proposição?</li>
+                        <li>Por que o termo <strong>Craniata</strong> seria mais preciso que Vertebrata para definir este clado?</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="proposicao">
+                <h2><span class="step-number">IV.</span> Proposição 3: "A coluna vertebral, como a conhecemos, é uma característica dos Gnathostomata, e não de todos os Craniata."</h2>
+                <h3 class="context-title">A Questão das Vértebras</h3>
+                <p>Se "Vertebrata" significa "aquele que tem vértebras", a lampreia complica essa definição.</p>
+                <div class="instruction-box">
+                    <p><strong>Investigue a coluna vertebral:</strong></p>
+                    <ul>
+                        <li><strong>Na lampreia:</strong> Ela possui uma coluna vertebral com corpos vertebrais que substituem a notocorda? Ou apenas elementos vertebrais rudimentares sobre uma notocorda persistente?.</li>
+                        <li><strong>Nos peixes (cartilaginosos e ósseos):</strong> Agora sim, observe uma coluna vertebral completa, com vértebras que envolvem e substituem a notocorda. Esta é a condição típica dos <strong>Gnathostomata</strong> (vertebrados com mandíbula).</li>
+                        <li>Esta evidência sugere que o crânio surgiu antes de uma coluna vertebral completa?</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="sintese">
+                <h2><span class="step-number">V.</span> Síntese da Investigação</h2>
+                <p>Para organizar suas observações e preparar sua conclusão, teste seus conhecimentos preenchendo a tabela interativa abaixo. Selecione a opção correta para cada característica.</p>
+                <div class="table-container">
+                    <table id="interactive-table">
+                        <thead>
+                            <tr>
+                                <th>Animal</th>
+                                <th>Grupo</th>
+                                <th>Notocorda (no adulto)</th>
+                                <th>Crânio Definido</th>
+                                <th>Coluna Vertebral</th>
+                                <th>É um Vertebrado?</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Estrela-do-mar</td>
+                                <td>Echinodermata</td>
+                                <td data-correct="Ausente"><select class="interactive-select"><option value="">Selecione</option><option>Presente</option><option>Ausente</option><option>Rudimentar</option><option>Vestigial</option></select></td>
+                                <td data-correct="Ausente"><select class="interactive-select"><option value="">Selecione</option><option>Presente</option><option>Ausente</option></select></td>
+                                <td data-correct="Ausente"><select class="interactive-select"><option value="">Selecione</option><option>Presente</option><option>Ausente</option><option>Rudimentar</option></select></td>
+                                <td data-correct="Não"><select class="interactive-select"><option value="">Selecione</option><option>Sim</option><option>Não</option></select></td>
+                            </tr>
+                            <tr>
+                                <td>Ascídia</td>
+                                <td>Urochordata</td>
+                                <td data-correct="Ausente"><select class="interactive-select"><option value="">Selecione</option><option>Presente</option><option>Ausente</option><option>Rudimentar</option><option>Vestigial</option></select></td>
+                                <td data-correct="Ausente"><select class="interactive-select"><option value="">Selecione</option><option>Presente</option><option>Ausente</option></select></td>
+                                <td data-correct="Ausente"><select class="interactive-select"><option value="">Selecione</option><option>Presente</option><option>Ausente</option><option>Rudimentar</option></select></td>
+                                <td data-correct="Não"><select class="interactive-select"><option value="">Selecione</option><option>Sim</option><option>Não</option></select></td>
+                            </tr>
+                            <tr>
+                                <td>Anfioxo</td>
+                                <td>Cephalochordata</td>
+                                <td data-correct="Presente"><select class="interactive-select"><option value="">Selecione</option><option>Presente</option><option>Ausente</option><option>Rudimentar</option><option>Vestigial</option></select></td>
+                                <td data-correct="Ausente"><select class="interactive-select"><option value="">Selecione</option><option>Presente</option><option>Ausente</option></select></td>
+                                <td data-correct="Ausente"><select class="interactive-select"><option value="">Selecione</option><option>Presente</option><option>Ausente</option><option>Rudimentar</option></select></td>
+                                <td data-correct="Não"><select class="interactive-select"><option value="">Selecione</option><option>Sim</option><option>Não</option></select></td>
+                            </tr>
+                            <tr>
+                                <td>Lampreia</td>
+                                <td>Agnatha</td>
+                                <td data-correct="Presente"><select class="interactive-select"><option value="">Selecione</option><option>Presente</option><option>Ausente</option><option>Rudimentar</option><option>Vestigial</option></select></td>
+                                <td data-correct="Presente"><select class="interactive-select"><option value="">Selecione</option><option>Presente</option><option>Ausente</option></select></td>
+                                <td data-correct="Rudimentar"><select class="interactive-select"><option value="">Selecione</option><option>Presente</option><option>Ausente</option><option>Rudimentar</option></select></td>
+                                <td data-correct="Sim"><select class="interactive-select"><option value="">Selecione</option><option>Sim</option><option>Não</option></select></td>
+                            </tr>
+                            <tr>
+                                <td>Peixe Ósseo</td>
+                                <td>Gnathostomata</td>
+                                <td data-correct="Vestigial"><select class="interactive-select"><option value="">Selecione</option><option>Presente</option><option>Ausente</option><option>Rudimentar</option><option>Vestigial</option></select></td>
+                                <td data-correct="Presente"><select class="interactive-select"><option value="">Selecione</option><option>Presente</option><option>Ausente</option></select></td>
+                                <td data-correct="Presente"><select class="interactive-select"><option value="">Selecione</option><option>Presente</option><option>Ausente</option><option>Rudimentar</option></select></td>
+                                <td data-correct="Sim"><select class="interactive-select"><option value="">Selecione</option><option>Sim</option><option>Não</option></select></td>
+                            </tr>
+                            <tr>
+                                <td>Mamífero</td>
+                                <td>Gnathostomata</td>
+                                <td data-correct="Vestigial"><select class="interactive-select"><option value="">Selecione</option><option>Presente</option><option>Ausente</option><option>Rudimentar</option><option>Vestigial</option></select></td>
+                                <td data-correct="Presente"><select class="interactive-select"><option value="">Selecione</option><option>Presente</option><option>Ausente</option></select></td>
+                                <td data-correct="Presente"><select class="interactive-select"><option value="">Selecione</option><option>Presente</option><option>Ausente</option><option>Rudimentar</option></select></td>
+                                <td data-correct="Sim"><select class="interactive-select"><option value="">Selecione</option><option>Sim</option><option>Não</option></select></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="instruction-box">
+                    <p><strong>Sua Conclusão Científica:</strong></p>
+                    <ul>
+                        <li>Com base nas evidências que você coletou e na tabela que preencheu, escreva um parágrafo definindo o que é um vertebrado (Craniata). Sua definição deve se basear nas apomorfias que você observou e justificar por que o crânio, e não as vértebras, é a característica definidora mais fundamental do grupo.</li>
+                    </ul>
+                </div>
+                <p>Ao final desta investigação, você não apenas decorou as características dos vertebrados, mas as descobriu através da análise comparativa, exatamente como os primeiros anatomistas fizeram.</p>
+            </section>
+        </main>
+        <footer>
+            <p>Este roteiro foi desenvolvido por Conrado Galdino e Alex Braga. v0.1</p>
+            <p><a href="https://yaiah.github.io/praticasafv/">Web site praticasafv</a> © 2025 by <a href="https://creativecommons.org">Conrado Galdino</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></p>
+            
+        </footer>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- CRONÔMETRO FLUTUANTE ---
+            const timerDisplay = document.getElementById('floating-timer');
+            if (timerDisplay) {
+                let totalTime = 80 * 60; // 80 minutos em segundos
+
+                const countdown = setInterval(() => {
+                    if (totalTime <= 0) {
+                        clearInterval(countdown);
+                        timerDisplay.textContent = "Tempo Esgotado!";
+                        return;
+                    }
+
+                    totalTime--;
+                    const minutes = Math.floor(totalTime / 60);
+                    let seconds = totalTime % 60;
+                    seconds = seconds < 10 ? '0' + seconds : seconds;
+                    timerDisplay.textContent = `Tempo: ${minutes}:${seconds}`;
+
+                }, 1000);
+            }
+            
+            // --- NAVEGAÇÃO ATIVA ---
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('#side-nav a');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            // --- JOGO DA TABELA INTERATIVA ---
+            const interactiveSelects = document.querySelectorAll('.interactive-select');
+            interactiveSelects.forEach(select => {
+                select.addEventListener('change', (event) => {
+                    const selectedValue = event.target.value;
+                    const parentCell = event.target.parentElement;
+                    const correctAnswer = parentCell.dataset.correct;
+
+                    if (selectedValue === correctAnswer) {
+                        parentCell.classList.add('correct-cell');
+                        event.target.disabled = true;
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
