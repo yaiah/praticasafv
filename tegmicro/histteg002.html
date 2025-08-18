@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Prático: Histologia Comparada do Tegumento</title>
+    <style>
+        /* Estilos Gerais */
+        :root {
+            --primary-color: #2c3e50; /* Azul escuro */
+            --secondary-color: #3498db; /* Azul claro */
+            --accent-color: #e67e22; /* Laranja */
+            --context-color: #8e44ad; /* Roxo para contexto */
+            --background-color: #ecf0f1; /* Cinza claro */
+            --text-color: #34495e; /* Cinza escuro */
+            --card-bg-color: #ffffff;
+            --instruction-bg: #fef5e7; /* Laranja bem claro */
+            --correct-answer-bg: #d4edda; /* Verde claro para acerto */
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+        }
+
+        /* Menu de Navegação Lateral */
+        #side-nav {
+            width: 240px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            background-color: var(--primary-color);
+            padding-top: 20px;
+            overflow-y: auto;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        #side-nav h3 {
+            color: #ecf0f1;
+            text-align: center;
+            padding: 0 15px;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        
+        #side-nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #side-nav li a {
+            display: block;
+            color: #bdc3c7;
+            padding: 12px 20px;
+            text-decoration: none;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        #side-nav li a:hover {
+            background-color: #34495e;
+            color: #ffffff;
+        }
+
+        #side-nav li a.active {
+            background-color: #4a627a;
+            color: #ffffff;
+            font-weight: bold;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        /* Conteúdo Principal com margem para o menu */
+        .main-content {
+            margin-left: 240px;
+            width: calc(100% - 240px);
+        }
+        
+        /* Cabeçalho Único */
+        header {
+            background-color: var(--card-bg-color);
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: 4px solid var(--secondary-color);
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            margin: 0;
+            font-size: 2.2em;
+        }
+        
+        header h2 {
+            margin: 0.5rem 0 0;
+            font-size: 1.3em;
+            color: var(--text-color);
+            font-weight: normal;
+        }
+        
+        header .author-credit {
+            font-size: 1em;
+            color: #7f8c8d;
+            margin-top: 10px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        section {
+            background-color: var(--card-bg-color);
+            margin-bottom: 2rem;
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-left: 5px solid var(--secondary-color);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3.context-title {
+            color: var(--context-color);
+            margin-top: 2rem;
+            border-bottom: 2px solid #d2b4de;
+            padding-bottom: 8px;
+        }
+        
+        strong, b {
+            color: var(--primary-color);
+        }
+        
+        /* Caixa de Dica/Instrução */
+        .instruction-box {
+            background-color: var(--instruction-bg);
+            border: 1px solid #f5cba7;
+            border-left: 5px solid var(--accent-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+        .instruction-box p, .instruction-box li {
+            margin: 0;
+            color: #b9770e;
+        }
+        .instruction-box strong {
+            color: #b9770e;
+        }
+        .instruction-box ul {
+            list-style-type: '❓ ';
+            padding-left: 20px;
+            margin-top: 0.5rem;
+        }
+        
+        figure {
+            margin: 1.5rem auto;
+            text-align: center;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: block;
+            margin: 0 auto 0.5rem;
+            border: 1px solid #ddd;
+        }
+
+        figcaption {
+            font-size: 0.9em;
+            color: #555;
+            padding: 0 1rem;
+            font-style: italic;
+        }
+        
+        /* Tabela Interativa */
+        .table-container {
+            overflow-x: auto;
+            margin-top: 1.5rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+            min-width: 120px;
+        }
+        thead {
+            background-color: var(--primary-color);
+            color: var(--card-bg-color);
+            font-weight: bold;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .interactive-select {
+            width: 100%;
+            padding: 6px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            background-color: white;
+            cursor: pointer;
+        }
+        .correct-cell {
+            background-color: var(--correct-answer-bg) !important;
+        }
+        .interactive-select:disabled {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border: none;
+            background: transparent;
+            font-weight: bold;
+            color: #34495e;
+        }
+
+        /* Rodapé */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        
+        footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsividade para smartphones */
+        @media (max-width: 900px) {
+            body {
+                display: block;
+            }
+            #side-nav {
+                width: 100%;
+                height: auto;
+                position: static;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="side-nav">
+        <h3>Seja bem vindo(a)!</h3>
+        <ul>
+            <li><a href="#intro">I. Introdução</a></li>
+            <li><a href="#blueprint">II. O Blueprint do Tegumento</a></li>
+            <li><a href="#aquaticos">III. A Interface Aquática</a></li>
+            <li><a href="#anfibios">IV. A Transição para a Terra</a></li>
+            <li><a href="#amniotas">V. A Conquista da Terra</a></li>
+            <li><a href="#discussao">VI. Discussão e Evolução</a></li>
+            <li><a href="#jogo">VII. Jogo de Associação</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <header>
+            <h1>Guia Prático de Investigação</h1>
+            <h2>Histologia Comparada do Tegumento</h2>
+            <div class="author-credit">Elaborado por Prof. Conrado Galdino</div>
+        </header>
+
+        <main class="container">
+            <section id="intro">
+                <h2><span class="step-number">I.</span> Introdução e Objetivos</h2>
+                <p>O tegumento é um órgão dinâmico cuja microestrutura revela a história evolutiva de cada linhagem de vertebrado. Nesta aula, vamos investigar as lâminas histológicas para decifrar como as camadas da pele, suas células e suas glândulas se modificaram para permitir a conquista de novos ambientes. Sua missão é conectar a estrutura microscópica à função.</p>
+                <b>Objetivos:</b>
+                <ul>
+                    <li>Identificar as camadas do tegumento (epiderme, derme) em vertebrados.</li>
+                    <li>Comparar as especializações histológicas (queratinização, glândulas, cromatóforos) entre os principais grupos.</li>
+                    <li>Discutir a homologia das estruturas tegumentares e o papel das interações dermo-epidérmicas na evolução.</li>
+                </ul>
+            </section>
+
+            <section id="blueprint">
+                <h2><span class="step-number">II.</span> O Blueprint do Tegumento</h2>
+                <h3 class="context-title">Proposição: "Todo tegumento de vertebrado é construído a partir de um plano básico de camadas com origens embrionárias distintas."</h3>
+                <div class="instruction-box">
+                    <p><strong>Investigue o plano fundamental em qualquer lâmina:</strong></p>
+                    <ul>
+                        <li>Identifique a <strong>epiderme</strong>, a camada mais externa de origem ectodérmica.</li>
+                        <li>Observe a <strong>derme</strong>, de origem mesodérmica, logo abaixo. Note a <strong>membrana basal</strong> que as separa.</li>
+                        <li>Abaixo da derme, reconheça a <strong>hipoderme</strong>, uma camada de tecido conjuntivo frouxo e adiposo que conecta a pele à musculatura.</li>
+                        <li>Procure por <strong>cromatóforos</strong>. Em que camada (derme ou epiderme) eles são mais comuns na maioria dos grupos? Lembre-se que estas células pigmentares se originam da crista neural.</li>
+                    </ul>
+                </div>
+                <figure>
+                    <img src="Gesc.jpg" alt="Esquema geral do tegumento de um vertebrado" style="max-width: 600px;">
+                    <figcaption>Figura 1: Esquema geral do tegumento de um vertebrado.</figcaption>
+                </figure>
+            </section>
+
+            <section id="aquaticos">
+                <h2><span class="step-number">III.</span> A Interface Aquática: Peixes</h2>
+                <h3 class="context-title">Proposição: "O tegumento dos peixes é uma barreira viva e secretora, otimizada para a vida na água, com diferentes estratégias de proteção."</h3>
+                <div class="instruction-box">
+                    <p><strong>Investigue as lâminas de peixes:</strong></p>
+                    <ul>
+                        <li><strong>Lampreia:</strong> Note a espessura da epiderme e da derme. Localize os cromatóforos e as abundantes <strong>glândulas mucosas e em clava</strong>. Anote: há presença de alguma estrutura queratinizada, ossificada ou de glândulas multicelulares?</li>
+                        <li><strong>Chondrichthyes:</strong> Localize os cromatóforos. Tente encontrar glândulas. Observe a estrutura da <strong>escama placóide</strong>, notando sua base na derme e a ponta perfurando a epiderme.</li>
+                        <li><strong>Osteichthyes:</strong> Tente localizar glândulas unicelulares. Observe a estrutura da <strong>escama elasmóide</strong> (cicloide/ctenoide), totalmente imersa na derme e coberta pela epiderme. Compare sua estrutura com a da escama placóide.</li>
+                    </ul>
+                </div>
+                <h3 class="context-title">Série de Transformação das Escamas</h3>
+                <p>Uma <strong>série de transformação</strong> é uma sequência de modificações de uma estrutura ao longo da evolução. A armadura dérmica dos Ostracodermes (peixes agnatos extintos), composta por esmalte, dentina e osso, é a condição ancestral da qual derivaram as escamas dos peixes modernos.</p>
+                <figure>
+                    <img src="parmourinteg.png" alt="Corte da armadura primitiva">
+                    <figcaption>Figura 2: Desenho de um corte esquemático da armadura primitiva. (Fonte: Kardong, 2017)</figcaption>
+                </figure>
+                <div class="instruction-box">
+                    <p><strong>Construa a série de transformação:</strong></p>
+                    <ul>
+                        <li>Partindo da armadura primitiva, descreva a série de transformação que levou à <strong>escama placóide</strong>. Quais camadas (esmalte, dentina, osso) foram mantidas e quais foram perdidas ou reduzidas?</li>
+                        <li>Agora, descreva a série de transformação que levou à <strong>escama elasmóide</strong>. Quais camadas foram mantidas e quais foram perdidas?</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section id="anfibios">
+                <h2><span class="step-number">IV.</span> A Transição para a Terra: Anfíbios</h2>
+                <h3 class="context-title">Proposição: "A pele dos anfíbios é um órgão de compromisso, exibindo as primeiras adaptações para a vida terrestre (queratinização) ao mesmo tempo que retém a função respiratória aquática."</h3>
+                <div class="instruction-box">
+                    <p><strong>Investigue a lâmina de pele de sapo:</strong></p>
+                    <ul>
+                        <li>Identifique o <strong>estrato córneo</strong>. Esta fina camada de queratina é a primeira barreira contra a dessecação. Por que ela não pode ser muito espessa neste grupo?</li>
+                        <li>Observe a abundância de <strong>glândulas multicelulares (mucosas e granulares)</strong>. Compare a complexidade e a quantidade destas glândulas com as glândulas unicelulares dos peixes ósseos. Por que um animal que está conquistando a terra precisa de uma produção de muco tão intensa?</li>
+                        <li>Note a alta vascularização da derme. Como essa característica está diretamente ligada à <strong>respiração cutânea</strong>?</li>
+                    </ul>
+                </div>
+                <figure>
+                    <img src="frogintg.jpg" alt="Histologia de pele de sapo">
+                    <figcaption>Figura 3: Em todas as regiões do tegumento, a epiderme (E) repousa sobre a derme, que se subdivide em derme esponjosa (SD) e derme compacta (CD). Iridóforos (→) ocorrem na região dorsal. Melanóforos na derme esponjosa. Glândulas serosas (Ø) e apócrinas (¬) ocorrem na derme esponjosa. Grandes vasos sanguíneos ocorrem na hipoderme. (Fonte: da Silva et al., 2017)</figcaption>
+                </figure>
+            </section>
+
+            <section id="amniotas">
+                <h2><span class="step-number">V.</span> A Conquista da Terra: Amniotas</h2>
+                <h3 class="context-title">Proposição: "O sucesso dos amniotas em terra firme está diretamente ligado à evolução de uma epiderme altamente queratinizada e de apêndices epidérmicos complexos."</h3>
+                <div class="instruction-box">
+                    <p><strong>Compare as lâminas de Sauropsida, Aves e Mammalia:</strong></p>
+                    <ul>
+                        <li><strong>Em Sauropsida:</strong> Observe a espessura do <strong>estrato córneo</strong> e a formação da <strong>escama epidérmica</strong>. Há glândulas disseminadas pela derme? A redução glandular é uma característica de uma pele impermeável?</li>
+                        <li><strong>Em Aves:</strong> Localize o <strong>folículo ptiloso</strong> (da pena). A pena é uma estrutura epidérmica homóloga à escama dos sauropsidas. Observe a fina camada de tecido adiposo na hipoderme. Qual sua função?</li>
+                        <li><strong>Em Mammalia:</strong> Compare a pele plantar (com um estrato córneo extremamente espesso) com a pele pilosa. Na pele pilosa, identifique o <strong>folículo piloso</strong>, as glândulas associadas (<strong>sebáceas e sudoríparas</strong>) e, se possível, o <strong>músculo eretor do pelo</strong>.</li>
+                    </ul>
+                </div>
+                <div>
+                    <figure>
+                        <img src="squamatesinteg.png" alt="Corte de pele de lagarto">
+                        <figcaption>Figura 4: Histologia da pele da perna de <strong>Trachemys scripta elegans </strong> (cágado). A epiderme é espessa e queratinizada. Na derme, observam-se vastos melanóforos e uma espessa camada de tecido conjuntivo denso. (Fonte: Rutland et al., 2019)</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="bisrinteg.png" alt="Corte de pele de ave">
+                        <figcaption>Figura 5: Corte histológico do tegumento de Ave.</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="maminteg.jpg" alt="Corte de pele de mamífero">
+                        <figcaption>Figura 6: Corte histológico do tegumento de Mamífero.</figcaption>
+                    </figure>
+                </div>
+            </section>
+
+            <section id="discussao">
+                <h2><span class="step-number">VI.</span> Discussão e Evolução</h2>
+                <h3 class="context-title">Proposição Final: "As interações entre derme e epiderme são o motor evolutivo para a diversidade de estruturas tegumentares nos vertebrados."</h3>
+                <div class="instruction-box">
+                    <p><strong>Reflita sobre suas observações:</strong></p>
+                    <ul>
+                        <li>As escamas dos peixes (dérmicas) e dos répteis (epidérmicas) são homólogas?</li>
+                        <li>As penas, pelos e escamas dos sauropsida são homólogos. O que isso nos diz sobre o potencial evolutivo da epiderme dos amniotas?</li>
+                        <li>A elevada abundância de glândulas no tegumento de anfíbios e mamíferos é uma condição homóloga? Justifique com base na posição filogenética e na função dessas glândulas em cada grupo.</li>
+                        <li>Como as interações dermo-epidérmicas (a derme induzindo a epiderme a se diferenciar) explicam a origem de estruturas tão complexas como dentes, penas e pelos?</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="jogo">
+                <h2><span class="step-number">VII.</span> Jogo de Associação: Estrutura vs. Grupo</h2>
+                <p>Para consolidar seu aprendizado, teste seus conhecimentos associando cada característica histológica ao grupo de vertebrados correspondente.</p>
+                <div class="table-container">
+                    <table id="interactive-table">
+                        <thead>
+                            <tr>
+                                <th>Estrutura / Característica</th>
+                                <th>Grupo de Vertebrados</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Folículo piloso com glândulas sebáceas e sudoríparas</td>
+                                <td data-correct="Mammalia"><select class="interactive-select"><option value="">Selecione</option><option>Agnatha</option><option>Osteichthyes</option><option>Chondrichthyes</option><option>Amphibia</option><option>Sauropsida</option><option>Aves</option><option>Mammalia</option></select></td>
+                            </tr>
+                            <tr>
+                                <td>Estrato córneo fino e derme altamente vascularizada</td>
+                                <td data-correct="Amphibia"><select class="interactive-select"><option value="">Selecione</option><option>Agnatha</option><option>Osteichthyes</option><option>Chondrichthyes</option><option>Amphibia</option><option>Sauropsida</option><option>Aves</option><option>Mammalia</option></select></td>
+                            </tr>
+                            <tr>
+                                <td>Pele com glândulas mucosas e em clava</td>
+                                <td data-correct="Agnatha"><select class="interactive-select"><option value="">Selecione</option><option>Agnatha</option><option>Osteichthyes</option><option>Chondrichthyes</option><option>Amphibia</option><option>Sauropsida</option><option>Aves</option><option>Mammalia</option></select></td>
+                            </tr>
+                            <tr>
+                                <td>Escama placóide de origem dérmica</td>
+                                <td data-correct="Chondrichthyes"><select class="interactive-select"><option value="">Selecione</option><option>Agnatha</option><option>Osteichthyes</option><option>Chondrichthyes</option><option>Amphibia</option><option>Sauropsida</option><option>Aves</option><option>Mammalia</option></select></td>
+                            </tr>
+                            <tr>
+                                <td>Epiderme não queratinizada com glândulas unicelulares</td>
+                                <td data-correct="Osteichthyes"><select class="interactive-select"><option value="">Selecione</option><option>Agnatha</option><option>Osteichthyes</option><option>Chondrichthyes</option><option>Amphibia</option><option>Sauropsida</option><option>Aves</option><option>Mammalia</option></select></td>
+                            </tr>
+                            <tr>
+                                <td>Folículo ptiloso e pele fina com pouco tecido adiposo</td>
+                                <td data-correct="Aves"><select class="interactive-select"><option value="">Selecione</option><option>Agnatha</option><option>Osteichthyes</option><option>Chondrichthyes</option><option>Amphibia</option><option>Sauropsida</option><option>Aves</option><option>Mammalia</option></select></td>
+                            </tr>
+                            <tr>
+                                <td>Estrato córneo espesso formando escamas epidérmicas</td>
+                                <td data-correct="Sauropsida"><select class="interactive-select"><option value="">Selecione</option><option>Agnatha</option><option>Osteichthyes</option><option>Chondrichthyes</option><option>Amphibia</option><option>Sauropsida</option><option>Aves</option><option>Mammalia</option></select></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <p>Todos os direitos reservados. Powered by <a href="https://yaiah.com" target="_blank">Yaiah</a></p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- NAVEGAÇÃO ATIVA ---
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('#side-nav a');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            // --- JOGO DA TABELA INTERATIVA ---
+            const interactiveSelects = document.querySelectorAll('.interactive-select');
+            interactiveSelects.forEach(select => {
+                select.addEventListener('change', (event) => {
+                    const selectedValue = event.target.value;
+                    const parentCell = event.target.parentElement;
+                    const correctAnswer = parentCell.dataset.correct;
+
+                    if (selectedValue === correctAnswer) {
+                        parentCell.classList.add('correct-cell');
+                        // Desabilitar o select apenas quando a resposta for correta
+                        event.target.disabled = true;
+                    }
+                    // Se a resposta for errada, não fazemos nada,
+                    // permitindo que o aluno tente novamente.
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
