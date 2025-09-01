@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Prático: Morfologia Macroscópica do Tegumento</title>
+    <style>
+        /* Estilos Gerais */
+        :root {
+            --primary-color: #2c3e50; /* Azul escuro */
+            --secondary-color: #3498db; /* Azul claro */
+            --accent-color: #e67e22; /* Laranja */
+            --context-color: #8e44ad; /* Roxo para contexto */
+            --background-color: #ecf0f1; /* Cinza claro */
+            --text-color: #34495e; /* Cinza escuro */
+            --card-bg-color: #ffffff;
+            --instruction-bg: #fef5e7; /* Laranja bem claro */
+            --correct-answer-bg: #d4edda; /* Verde claro para acerto */
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+        }
+
+        /* Menu de Navegação Lateral */
+        #side-nav {
+            width: 240px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            background-color: var(--primary-color);
+            padding-top: 20px;
+            overflow-y: auto;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        #side-nav h3 {
+            color: #ecf0f1;
+            text-align: center;
+            padding: 0 15px;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        
+        #side-nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #side-nav li a {
+            display: block;
+            color: #bdc3c7;
+            padding: 12px 20px;
+            text-decoration: none;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        #side-nav li a:hover {
+            background-color: #34495e;
+            color: #ffffff;
+        }
+
+        #side-nav li a.active {
+            background-color: #4a627a;
+            color: #ffffff;
+            font-weight: bold;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        /* Conteúdo Principal com margem para o menu */
+        .main-content {
+            margin-left: 240px;
+            width: calc(100% - 240px);
+        }
+        
+        /* Cabeçalho Único */
+        header {
+            background-color: var(--card-bg-color);
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: 4px solid var(--secondary-color);
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            margin: 0;
+            font-size: 2.2em;
+        }
+        
+        header h2 {
+            margin: 0.5rem 0 0;
+            font-size: 1.3em;
+            color: var(--text-color);
+            font-weight: normal;
+        }
+        
+        header .author-credit {
+            font-size: 1em;
+            color: #7f8c8d;
+            margin-top: 10px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        section {
+            background-color: var(--card-bg-color);
+            margin-bottom: 2rem;
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-left: 5px solid var(--secondary-color);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3.station-title {
+            color: var(--context-color);
+            margin-top: 2rem;
+            border-bottom: 2px solid #d2b4de;
+            padding-bottom: 8px;
+        }
+        
+        strong, b {
+            color: var(--primary-color);
+        }
+        
+        .instruction-box {
+            background-color: var(--instruction-bg);
+            border: 1px solid #f5cba7;
+            border-left: 5px solid var(--accent-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+        .instruction-box p, .instruction-box li {
+            margin: 0;
+            color: #b9770e;
+        }
+        .instruction-box strong {
+            color: #b9770e;
+        }
+        .instruction-box ul {
+            list-style-type: '❓ ';
+            padding-left: 20px;
+            margin-top: 0.5rem;
+        }
+        
+        figure {
+            margin: 1.5rem auto;
+            text-align: center;
+        }
+
+        .image-gallery {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .image-gallery figure {
+            max-width: 48%;
+            min-width: 250px;
+            flex-grow: 1;
+            margin: 0;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: block;
+            margin: 0 auto 0.5rem;
+            border: 1px solid #ddd;
+        }
+
+        figcaption {
+            font-size: 0.9em;
+            color: #555;
+            padding: 0 1rem;
+            font-style: italic;
+        }
+        
+        /* Tabela Interativa */
+        .table-container {
+            overflow-x: auto;
+            margin-top: 1.5rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+            min-width: 120px;
+        }
+        thead {
+            background-color: var(--primary-color);
+            color: var(--card-bg-color);
+            font-weight: bold;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .interactive-select {
+            width: 100%;
+            padding: 6px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            background-color: white;
+            cursor: pointer;
+        }
+        .correct-cell {
+            background-color: var(--correct-answer-bg) !important;
+        }
+        .interactive-select:disabled {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border: none;
+            background: transparent;
+            font-weight: bold;
+            color: #34495e;
+        }
+
+        /* Rodapé */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        
+        footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                display: block;
+            }
+            #side-nav {
+                width: 100%;
+                height: auto;
+                position: static;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="side-nav">
+        <h3>Menu da Aula</h3>
+        <ul>
+            <li><a href="#intro">I. Introdução</a></li>
+            <li><a href="#estacao1">II. Estação 1: Agnatha</a></li>
+            <li><a href="#estacao2">III. Estação 2: Chondrichthyes</a></li>
+            <li><a href="#estacao3">IV. Estação 3: Osteichthyes</a></li>
+            <li><a href="#estacao4">V. Estação 4: Anfíbios</a></li>
+            <li><a href="#estacao5">VI. Estação 5: Sauropsida não avianos</a></li>
+            <li><a href="#estacao6">VII. Estação 6: Aves e Mamíferos</a></li>
+            <li><a href="#sintese">VIII. Síntese</a></li>
+            <li><a href="#jogo">IX. Jogo de Associação</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <header>
+            <h1>Guia Prático de Investigação</h1>
+            <h2>Morfologia Macroscópica do Tegumento</h2>
+            <div class="author-credit">Elaborado por Prof. Conrado Galdino</div>
+        </header>
+
+        <main class="container">
+            <section id="intro">
+                <h2><span class="step-number">I.</span> Introdução e Objetivos</h2>
+                <p>Bem-vindos à nossa investigação sobre a morfologia macroscópica do tegumento. Hoje, vamos explorar como a pele e suas estruturas derivadas contam a história da evolução dos vertebrados. Cada peça anatômica é uma evidência, uma solução evolutiva. A sua missão é agir como um detetive, conectando a forma da estrutura à sua função e origem.</p>
+                <b>Objetivos:</b>
+                <ul>
+                    <li>Reconhecer e diferenciar as principais estruturas macroscópicas derivadas do tegumento.</li>
+                    <li>Relacionar a morfologia de cada estrutura com sua função adaptativa e com o ambiente.</li>
+                    <li>Aplicar os conceitos de homologia e analogia para interpretar a evolução do tegumento.</li>
+                </ul>
+            </section>
+            
+            <section id="estacao1">
+                <h2><span class="step-number">II.</span> Estação de Investigação 1: Agnatha - A Pele Glandular</h2>
+                <h3 class="station-title">Peças Anatômicas:</h3>
+                <p>Exemplar de Lampreia.</p>
+                
+                <div class="instruction-box">
+                    <p><strong>Questões para Investigação:</strong></p>
+                    <ul>
+                        <li>Observe a superfície do corpo. Ela possui escamas ou qualquer tipo de armadura externa? Descreva a textura e a aparência da pele.</li>
+                        <li>Examine o funil oral. As estruturas pontiagudas que você vê são dentes tais quais os que você tem em sua boca? Justifique! Pesauise e responda. Considerando os vertebrados, os dentes córneos das lampreias podem ser considerados uma autoapormofia do grupo? </li>
+                    </ul>
+                </div>
+                <div class="image-gallery">
+                    <figure>
+                        <img src="lamprey.jpg" alt="[Imagem da pele lisa da Lampreia]">
+                        <figcaption>Pele lisa e sem escamas da lampreia.</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="bocalamprea.jpg" alt="[Imagem dos dentes córneos da Lampreia]">
+                        <figcaption>Detalhe do funil oral com os dentes córneos.</figcaption>
+                    </figure>
+                </div>
+            </section>
+
+            <section id="estacao2">
+                <h2><span class="step-number">III.</span> Estação de Investigação 2: Chondrichthyes - A Pele como Lixa</h2>
+                <h3 class="station-title">Peças Anatômicas:</h3>
+                <p>Pele de tubarão/raia (escamas placoides). Use a lupa de bancada.</p>
+                
+                <div class="instruction-box">
+                    <p><strong>Questões para Investigação (do Estudo Dirigido):</strong></p>
+                    <ul>
+                        <li><strong>(Q4) Diferencie as escamas.</strong> Passe o dedo sobre a pele do tubarão nos dois sentidos (crânio-caudal e caudo-cranial). Qual a sensação em cada sentido? O que causa essa diferença? Qual relação funcional pode-se estbelecer com relação ao arranjo das estruturas das escamas deste grupo e a ausência de glândulas no tegumetno?</li>
+                         <li><strong>(Q5) Qual a relação destastruturas de escamas com a armadura primitiva?</strong> As escamas placoides são homólogas aos dentes dos vertebrados. Quais camadas da armadura primitiva foram mantidas?</li>
+                    </ul>
+                </div>
+                <figure>
+                    <img src="placoidscales.jpg">
+                    <figcaption>Superfície da pele de um tubarão, mostrando a textura das escamas placoides.</figcaption>
+                </figure>
+            </section>
+
+            <section id="estacao3">
+                <h2><span class="step-number">IV.</span> Estação de Investigação 3: Osteichthyes - A Armadura Flexível</h2>
+                <h3 class="station-title">Peças Anatômicas:</h3>
+                <p>Escamas de peixe ósseo (elasmoides: cicloides e ctenoides), escamas diversas, cavalo-marinho ou cascudo (placas dérmicas).</p>
+                
+                <div class="instruction-box">
+                    <p><strong>Questões para Investigação (do Estudo Dirigido):</strong></p>
+                    <ul>
+                        <li><strong>(Q4) Inspecione as escamas no microscópio.</strong> Compare as escamas elasmoides (cicloides e ctenoides).</li>
+                        <li>Observe as <strong>placas dérmicas</strong> do cascudo. Como essa armadura se compara com a cobertura de escamas?</li>
+                        <li><strong>(Q5) Qual a relação com a armadura primitiva?</strong> Descreva a série de transformação que levou à escama elasmoide. Quais camadas foram perdidas?</li>
+                        <li><strong>(Q3) Glândulas mucosas são mais comuns em que grupo?</strong> A pele dos peixes é coberta por muco. Qual a importância dessa camada para um animal aquático?</li>
+                    </ul>
+                </div>
+                <figure>
+                    <img src="fish.jpeg" alt="[Imagem de escamas elasmoides e placas dérmicas]">
+                    <figcaption>Diversidade de coberturas em peixes ósseos.</figcaption>
+                </figure>
+            </section>
+
+            <section id="estacao4">
+                <h2><span class="step-number">V.</span> Estação de Investigação 4: A pele para uma vida dupla!  - Anfíbios</h2>
+                <h3 class="station-title">Peças Anatômicas:</h3>
+                <p>Sapo, rã ou perereca conservados.</p>
+                
+                <div class="instruction-box">
+                    <p><strong>Questões para Investigação:</strong></p>
+                    <ul>
+                        <li>Observe a pele do animal. Ela tem aspecto liso. Localize possíveis <strong>acúmulos glandulares</strong> (ex: glândulas parotoides em sapos, geralmente ressaltos no tegumento).</li>
+                        <li>Observe os memb. Identifique <strong>calosidades palmares/plantares</strong>. Em rãs arborícolas, procure por <strong>discos adesivos</strong>. Em alguns sapos machos, procure pelo <strong>prepolex</strong> (calo nupcial). Qual a função de cada estrutura?</li>
+                        <li>Por que a produção de muco continua sendo tão crucial para um grupo que está conquistando o ambiente terrestre?</li>
+                    </ul>
+                </div>
+                 <figure>
+                    <img src="frog.jpg" alt="[Imagem de exemplar de Anfíbio]">
+                    <figcaption>Pele fina e glandular de um anfíbio.</figcaption>
+                </figure>
+            </section>
+            
+            <section id="estacao5">
+                <h2><span class="step-number">VI.</span> Estação de Investigação 5: Sauropsida não avianos - A Conquista da Terra</h2>
+                <h3 class="station-title">Peças Anatômicas:</h3>
+                <p>Carapaça e plastrão de tartaruga, osteodermas de jacaré, pele de cobra (muda/exúvia) e chocalho de cascavel, exemplares de lagartos.</p>
+
+                <div class="instruction-box">
+                    <p><strong>Questões para Investigação (do Estudo Dirigido):</strong></p>
+                    <ul>
+                        <li>Na <strong>carapaça e plastrão da tartaruga</strong>, identifique os escudos córneos (epidérmicos) e as placas ósseas (dérmicas). Como essa estrutura exemplifica a interação dermo-epidérmica?</li>
+                        <li>Nos <strong>crocodilianos</strong>, observe os osteodermas no dorso recobertos por queratina. <strong>(Q7) O que são osteodermas</strong> e qual o tipo de ossificação envolvida?</li>
+                        <li>Observe a <strong>muda da pele de cobra</strong> e o <strong>chocalho da cascavel</strong>. O que essas estruturas revelam sobre a troca e retenção do estrato córneo?</li>
+                        <li><strong>(Q6) De que é constituído o estrato córneo?</strong> A impermeabilização da pele foi um passo crucial para a vida em terra. Que molécula permitiu isso?</li>
+                    </ul>
+                </div>
+                 <figure>
+                    <img src="lizard.jpeg" alt="[Imagem de carapaça, osteodermas e pele de cobra]">
+                    <figcaption>Diversidade de tegumentos em Sauropsida não avianos.</figcaption>
+                </figure>
+            </section>
+
+            <section id="estacao6">
+                <h2><span class="step-number">VII.</span> Estação de Investigação 6: Aves e Mamíferos - A Revolução da Endotermia</h2>
+                <h3 class="station-title">Peças Anatômicas:</h3>
+                <p>Penas, pelos, garras, unha, úngula (casco), chifre de boi, haste de cervídeo, bico, exemplares txidermizados de aves e mamíferos.</p>
+
+                <div class="instruction-box">
+                    <p><strong>Questões para Investigação (do Estudo Dirigido):</strong></p>
+                    <ul>
+                        <li>Examine a <strong>pata da ave</strong> e localize as escamas. O que isso sugere sobre a <strong>homologia entre penas e as escamas dos sauropsidas não avianos</strong>?</li>
+                        <li>Manuseie as penas e os pelos. Como suas estruturas contribuem para o isolamento térmico?</li>
+                        <li><strong>(Q11) Distinga os ornamentos cefálicos:</strong> Compare e caracterize as estruturas de chifre (base óssea + estojo córneo) e haste (inteiramente óssea e decídua).</li>
+                        <li><strong>(Q12) Diferencie garra, úngula e unha.</strong> </li>
+                    </ul>
+                </div>
+                                 <div class="image-gallery">
+                    <figure>
+                        <img src="bird.jpg" alt="[Imagem de uma ave]">
+                        <figcaption>Configuração do tegumento de uma ave.</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="boi.jpg" alt="[Imagem de mamífero]">
+                        <figcaption>Pelos a estrutura conspícuoa do tegumento dor mamífero.</figcaption>
+                    </figure>
+                </div>
+            </section>
+
+            <section id="sintese">
+                <h2><span class="step-number">VIII.</span> Síntese da Investigação</h2>
+                <div class="instruction-box">
+                    <p><strong>Sua Conclusão:</strong></p>
+                    <ul>
+                        <li>Com base em todas as suas observações macroscópicas, desde a pele glandular da lampreia até os cornos e pelos dos mamíferos, escreva um parágrafo que resuma como a evolução das estruturas tegumentares permitiu aos vertebrados explorar e dominar os mais variados ambientes do planeta.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="jogo">
+                <div class="instruction-box">
+                    <p><strong>Sua Conclusão:</strong></p>
+                    <ul>
+                        <a href="gamegem.html" target=blank_>Clique aqui para ir para o jogo</a></li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <p>Todos os direitos reservados. Powered by <a href="https://yaiah.com" target="_blank">Yaiah</a></p>
+        </footer>
+    </div>
+
+    <script>
+        
+    </script>
+</body>
+</html>
+
+
