@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo: Memória Evolutiva do Tegumento</title>
+    <script type="module">
+        // Importações do Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Lógica do Jogo
+            const gameBoard = document.getElementById('game-board');
+            const timerElement = document.getElementById('timer');
+            const attemptsElement = document.getElementById('attempts');
+            const playerNameDisplay = document.getElementById('player-name-display');
+            const startModal = document.getElementById('start-modal');
+            const endModal = document.getElementById('end-game-modal');
+            const rankingModal = document.getElementById('ranking-modal');
+            const playerNameInput = document.getElementById('player-name-input');
+            const startButton = document.getElementById('start-button');
+            const restartButton = document.getElementById('restart-button');
+            const rankingButton = document.getElementById('ranking-button');
+            const closeRankingButton = document.getElementById('close-ranking-button');
+            const finalScoreElement = document.getElementById('final-score');
+            const endPlayerName = document.getElementById('end-player-name');
+            const badgeDisplay = document.getElementById('badge-display');
+            const rankingBody = document.getElementById('ranking-body');
+            const startError = document.getElementById('start-error');
+            const gameStats = document.querySelector('.game-stats');
+
+            let db;
+            let firebaseInitialized = false;
+            let currentPlayerName = '';
+            let currentRankingData = [];
+            const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+            // Função para inicializar o Firebase e o listener do ranking
+            async function initFirebaseAndRanking() {
+                if (firebaseInitialized) return;
+
+                try {
+                    const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+                    const app = initializeApp(firebaseConfig);
+                    db = getFirestore(app);
+                    const auth = getAuth(app);
+                    await signInAnonymously(auth);
+                    console.log("Firebase inicializado e usuário anônimo autenticado.");
+
+                    // Listener para atualizações em tempo real do ranking
+                    const rankingCollection = collection(db, `artifacts/${appId}/public/data/tegument-memory-ranking`);
+                    onSnapshot(rankingCollection, (snapshot) => {
+                        const rankingData = [];
+                        snapshot.forEach((doc) => {
+                            rankingData.push(doc.data());
+                        });
+                        currentRankingData = rankingData;
+                        console.log("Dados do ranking atualizados:", currentRankingData);
+                    });
+
+                    firebaseInitialized = true;
+                } catch (error) {
+                    console.error("Erro crucial ao inicializar o Firebase:", error);
+                }
+            }
+
+            // Função para salvar a pontuação
+            const saveScoreToFirebase = async (playerName, score, badge) => {
+                if (!db) {
+                    console.error("Firestore não está inicializado. Não foi possível salvar a pontuação.");
+                    return;
+                }
+                try {
+                    const rankingCollection = collection(db, `artifacts/${appId}/public/data/tegument-memory-ranking`);
+                    await addDoc(rankingCollection, { playerName, score, badge, timestamp: new Date() });
+                } catch (error) {
+                    console.error("Erro ao salvar a pontuação: ", error);
+                }
+            };
+
+            const cardData = [
+                { id: 1, name: 'Haste (Galhada)', desc: 'Estrutura óssea, trocada anualmente. (Cervídeos)', img: 'https://placehold.co/100x100/3498db/ffffff?text=Haste' },
+                { id: 2, name: 'Chifre Verdadeiro', desc: 'Base óssea com estojo de queratina. (Bovídeos)', img: 'https://placehold.co/100x100/3498db/ffffff?text=Chifre' },
+                { id: 3, name: 'Escamas Placoides', desc: 'Estrutura similar a um dente. (Chondrichthyes)', img: 'https://placehold.co/100x100/3498db/ffffff?text=Placoide' },
+                { id: 4, name: 'Penas', desc: 'Estruturas epidérmicas para voo e isolamento. (Aves)', img: 'https://placehold.co/100x100/3498db/ffffff?text=Pena' },
+                { id: 5, name: 'Pelos', desc: 'Estrutura epidérmica para isolamento térmico. (Mamíferos)', img: 'https://placehold.co/100x100/3498db/ffffff?text=Pelo' },
+                { id: 6, name: 'Escudos Córneos', desc: 'Placas de queratina sobre ossos dérmicos. (Quelônios)', img: 'https://placehold.co/100x100/3498db/ffffff?text=Escudo' },
+                { id: 7, name: 'Chocalho', desc: 'Segmentos de queratina retidos após a muda. (Cascavel)', img: 'https://placehold.co/100x100/3498db/ffffff?text=Chocalho' },
+                { id: 8, name: 'Dentes Córneos', desc: 'Estruturas de queratina no funil oral. (Agnatha)', img: 'https://placehold.co/100x100/3498db/ffffff?text=Dente' },
+            ];
+
+            let hasFlippedCard = false, lockBoard = false;
+            let firstCard, secondCard;
+            let attempts = 0, seconds = 0, matchedPairs = 0;
+            let timerInterval;
+
+            function createBoard() {
+                attempts = 0; seconds = 0; matchedPairs = 0;
+                attemptsElement.textContent = attempts;
+                timerElement.textContent = seconds;
+                gameBoard.innerHTML = '';
+                const gameCards = [...cardData, ...cardData].sort(() => 0.5 - Math.random());
+
+                gameCards.forEach(item => {
+                    const card = document.createElement('div');
+                    card.classList.add('memory-card');
+                    card.dataset.id = item.id;
+                    card.innerHTML = `
+                        <div class="front-face">?</div>
+                        <div class="back-face">
+                            <img src="${item.img}" alt="${item.name}">
+                            <p><strong>${item.name}</strong></p>
+                            <p>${item.desc}</p>
+                        </div>`;
+                    gameBoard.appendChild(card);
+                    card.addEventListener('click', flipCard);
+                });
+            }
+
+            async function startGame() {
+                await initFirebaseAndRanking();
+                const name = playerNameInput.value.trim();
+                if (!name) {
+                    startError.textContent = 'Por favor, digite seu nome.';
+                    playerNameInput.style.borderColor = 'red';
+                    setTimeout(() => {
+                        startError.textContent = '';
+                        playerNameInput.style.borderColor = '#ccc';
+                    }, 3000);
+                    return;
+                }
+                currentPlayerName = name;
+                playerNameDisplay.textContent = currentPlayerName;
+                startModal.style.display = 'none';
+                gameStats.style.display = 'flex';
+                createBoard();
+            }
+
+            function startTimer() {
+                clearInterval(timerInterval);
+                timerInterval = setInterval(() => {
+                    seconds++;
+                    timerElement.textContent = seconds;
+                }, 1000);
+            }
+
+            function flipCard() {
+                if (lockBoard || this === firstCard) return;
+                if (!timerInterval) startTimer();
+                this.classList.add('flip');
+                if (!hasFlippedCard) {
+                    hasFlippedCard = true;
+                    firstCard = this;
+                    return;
+                }
+                secondCard = this;
+                updateAttempts();
+                checkForMatch();
+            }
+
+            function checkForMatch() {
+                lockBoard = true;
+                firstCard.dataset.id === secondCard.dataset.id ? disableCards() : unflipCards();
+            }
+
+            function disableCards() {
+                firstCard.removeEventListener('click', flipCard);
+                secondCard.removeEventListener('click', flipCard);
+                matchedPairs++;
+                if (matchedPairs === cardData.length) endGame();
+                resetBoard();
+            }
+
+            function unflipCards() {
+                setTimeout(() => {
+                    firstCard.classList.remove('flip');
+                    secondCard.classList.remove('flip');
+                    resetBoard();
+                }, 1500);
+            }
+            
+            function resetBoard() {
+                [hasFlippedCard, lockBoard] = [false, false];
+                [firstCard, secondCard] = [null, null];
+            }
+
+            function updateAttempts() {
+                attempts++;
+                attemptsElement.textContent = attempts;
+            }
+
+            function getBadge(score) {
+                if (score >= 9000) return '🥇 Morfologista Mestre';
+                if (score >= 7000) return '🥈 Naturalista Experiente';
+                return '🥉 Cientista em Treinamento';
+            }
+
+            async function endGame() {
+                clearInterval(timerInterval);
+                timerInterval = null;
+                const score = Math.max(0, 10000 - (seconds * 10) - (attempts * 50));
+                const badge = getBadge(score);
+                
+                finalScoreElement.textContent = score;
+                endPlayerName.textContent = currentPlayerName;
+                badgeDisplay.textContent = badge;
+                
+                await saveScoreToFirebase(currentPlayerName, score, badge);
+                endModal.style.display = 'flex';
+            }
+
+            function updateRankingTable(rankingData) {
+                rankingData.sort((a, b) => b.score - a.score);
+                rankingBody.innerHTML = '';
+
+                if (rankingData.length === 0) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td colspan="4" style="text-align: center;">Ainda não há pontuações. Seja o primeiro!</td>`;
+                    rankingBody.appendChild(row);
+                } else {
+                    rankingData.forEach((data, index) => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${index + 1}</td>
+                            <td>${data.playerName}</td>
+                            <td>${data.score}</td>
+                            <td>${data.badge}</td>`;
+                        rankingBody.appendChild(row);
+                    });
+                }
+            }
+            
+            startButton.addEventListener('click', startGame);
+            
+            restartButton.addEventListener('click', () => {
+                endModal.style.display = 'none';
+                gameStats.style.display = 'flex';
+                createBoard();
+            });
+            
+            rankingButton.addEventListener('click', () => {
+                endModal.style.display = 'none';
+                updateRankingTable(currentRankingData);
+                rankingModal.style.display = 'flex';
+            });
+            
+            closeRankingButton.addEventListener('click', () => {
+                rankingModal.style.display = 'none';
+            });
+        });
+    </script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e67e22;
+            --background-color: #ecf0f1;
+            --text-color: #34495e;
+            --card-bg-color: #ffffff;
+            --card-back-color: #34495e;
+            --gold-badge: #f1c40f;
+            --silver-badge: #bdc3c7;
+            --bronze-badge: #cd7f32;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        .game-container {
+            width: 100%;
+            max-width: 900px;
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+
+        header { margin-bottom: 2rem; }
+        header h1 { color: var(--primary-color); margin: 0; }
+
+        .game-stats {
+            display: flex;
+            justify-content: space-around;
+            background-color: var(--card-bg-color);
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            font-size: 1.2em;
+        }
+        .game-stats div { flex: 1; }
+        .game-stats span { font-weight: bold; color: var(--accent-color); }
+
+        .memory-game {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            perspective: 1000px;
+        }
+
+        .memory-card {
+            background-color: transparent;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            cursor: pointer;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .memory-card.flip { transform: rotateY(180deg); }
+
+        .front-face, .back-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+            overflow: hidden;
+            box-sizing: border-box;
+            padding: 10px;
+        }
+        .front-face { background: var(--card-back-color); color: white; font-size: 3em; }
+        .back-face {
+            background: var(--card-bg-color);
+            transform: rotateY(180deg);
+            flex-direction: column;
+            text-align: center;
+            font-size: 0.9em;
+        }
+        .back-face img { max-width: 60%; max-height: 50%; margin-bottom: 10px; }
+        .back-face p { margin: 0; }
+
+        /* Estilo do Modal */
+        .modal {
+            position: fixed;
+            z-index: 100;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            padding: 30px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .modal-content h2 { color: var(--primary-color); }
+        .modal-content p { margin: 1rem 0; }
+
+        .modal-button {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            margin: 0.5rem;
+        }
+        .modal-button:hover { background-color: #d35400; }
+        
+        #player-name-input {
+            width: 80%;
+            padding: 10px;
+            margin-top: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+
+        #ranking-table {
+            width: 100%;
+            margin-top: 1rem;
+            border-collapse: collapse;
+        }
+        #ranking-table th, #ranking-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        #ranking-table th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .badge { font-size: 1.5em; }
+
+        @media (max-width: 600px) {
+            .game-container { padding: 1rem; }
+            .memory-game { grid-template-columns: repeat(2, 1fr); }
+            .back-face { font-size: 0.7em; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <header>
+            <h1>Memória Evolutiva do Tegumento</h1>
+            <p>Encontre os pares de imagem e descrição no menor tempo e com menos tentativas!</p>
+        </header>
+
+        <div class="game-stats" style="display: none;">
+            <div>Tempo: <span id="timer">0</span>s</div>
+            <div>Tentativas: <span id="attempts">0</span></div>
+            <div>Jogador: <span id="player-name-display"></span></div>
+        </div>
+
+        <div class="memory-game" id="game-board"></div>
+    </div>
+    
+    <!-- Modal de Início -->
+    <div id="start-modal" class="modal">
+        <div class="modal-content">
+            <h2>Bem-vindo!</h2>
+            <p>Digite seu nome para começar e entrar no ranking.</p>
+            <input type="text" id="player-name-input" placeholder="Seu nome aqui" maxlength="20">
+            <p id="start-error" style="color: red; height: 1.2em; margin-top: 5px; margin-bottom: 5px;"></p>
+            <button id="start-button" class="modal-button">Começar a Jogar</button>
+        </div>
+    </div>
+
+    <!-- Modal de Fim de Jogo -->
+    <div id="end-game-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h2>Parabéns, <span id="end-player-name"></span>!</h2>
+            <p>Você completou o desafio!</p>
+            <p><strong>Sua pontuação final é: <span id="final-score">0</span></strong></p>
+            <p>Sua badge: <span id="badge-display" class="badge"></span></p>
+            <button id="ranking-button" class="modal-button">Ver Ranking</button>
+            <button id="restart-button" class="modal-button">Jogar Novamente</button>
+        </div>
+    </div>
+
+    <!-- Modal de Ranking -->
+    <div id="ranking-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h2>Ranking dos Morfologistas</h2>
+            <div style="max-height: 300px; overflow-y: auto;">
+                <table id="ranking-table">
+                    <thead>
+                        <tr>
+                            <th>Pos.</th>
+                            <th>Nome</th>
+                            <th>Pontuação</th>
+                            <th>Badge</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ranking-body"></tbody>
+                </table>
+            </div>
+            <button id="close-ranking-button" class="modal-button">Fechar</button>
+        </div>
+    </div>
+</body>
+</html>
+
+
