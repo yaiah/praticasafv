@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Condrocrânio: Um Guia Prático de Investigação</title>
-    <style>
+<style>
     body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.7;
+    line-height: 1.7;
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
@@ -66,11 +66,12 @@ header h1 {
 header p {
     font-size: 1.2rem;
 }
+
 header .author-credit {
-            font-size: 1em;
-            color: #d7ecff;
-            margin-top: 10px;
-        }
+    font-size: 1em;
+    color: #d7ecff;
+    margin-top: 10px;
+}
 
 main {
     padding: 2rem;
@@ -117,26 +118,27 @@ figcaption {
 }
 
 footer {
-            text-align: center;
-            padding: 2rem;
-            color: #7f8c8d;
-            font-size: 0.9em;
-        }
-        
-        footer a {
-            color: var(--secondary-color);
-            text-decoration: none;
-            font-weight: bold;
-        }
-        
-        footer a:hover {
-            text-decoration: underline;
-        }
+    text-align: center;
+    padding: 2rem;
+    color: #7f8c8d;
+    font-size: 0.9em;
+}
+
+footer a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
 
 ul {
     list-style-type: disc;
     padding-left: 20px;
 }
+
 .tabela-container {
     overflow-x: auto;
 }
@@ -166,7 +168,18 @@ table tbody tr:nth-child(odd) {
 table tbody tr:hover {
     background-color: #ddd;
 }
-    </style>
+
+/* --- Media query para tornar o layout responsivo --- */
+@media (max-width: 768px) {
+    .side-nav {
+        display: none; /* Oculta o menu lateral */
+    }
+
+    header, main, footer {
+        margin-left: 0; /* Remove a margem fixa, permitindo que o conteúdo ocupe a tela toda */
+    }
+}
+</style>
 
 </head>
 <body>
