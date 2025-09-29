@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Prático: Morfologia Comparada do Dermatocrânio</title>
+    <style>
+        /* Estilos Gerais */
+        :root {
+            --primary-color: #2c3e50; /* Azul escuro */
+            --secondary-color: #3498db; /* Azul claro */
+            --accent-color: #e67e22; /* Laranja */
+            --context-color: #8e44ad; /* Roxo para contexto */
+            --background-color: #ecf0f1; /* Cinza claro */
+            --text-color: #34495e; /* Cinza escuro */
+            --card-bg-color: #ffffff;
+            --instruction-bg: #fef5e7; /* Laranja bem claro */
+            --correct-answer-bg: #d4edda; /* Verde claro para acerto */
+             --incorrect-answer-bg: #f8d7da; /* Vermelho claro para erro */
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+        }
+
+        /* Menu de Navegação Lateral */
+        #side-nav {
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            background-color: var(--primary-color);
+            padding-top: 20px;
+            overflow-y: auto;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        #side-nav h3 {
+            color: #ecf0f1;
+            text-align: center;
+            padding: 0 15px;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        
+        #side-nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #side-nav li a {
+            display: block;
+            color: #bdc3c7;
+            padding: 12px 20px;
+            text-decoration: none;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        #side-nav li a:hover {
+            background-color: #34495e;
+            color: #ffffff;
+        }
+
+        #side-nav li a.active {
+            background-color: #4a627a;
+            color: #ffffff;
+            font-weight: bold;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        /* Conteúdo Principal com margem para o menu */
+        .main-content {
+            margin-left: 250px;
+            width: calc(100% - 250px);
+        }
+        
+        /* Cabeçalho Único */
+        header {
+            background-color: var(--card-bg-color);
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: 4px solid var(--secondary-color);
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            margin: 0;
+            font-size: 2.2em;
+        }
+        
+        header h2 {
+            margin: 0.5rem 0 0;
+            font-size: 1.3em;
+            color: var(--text-color);
+            font-weight: normal;
+        }
+        
+        header .author-credit {
+            font-size: 1em;
+            color: #7f8c8d;
+            margin-top: 10px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        section {
+            background-color: var(--card-bg-color);
+            margin-bottom: 2rem;
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-left: 5px solid var(--secondary-color);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3.context-title {
+            color: var(--context-color);
+            margin-top: 2rem;
+            border-bottom: 2px solid #d2b4de;
+            padding-bottom: 8px;
+        }
+        
+        strong, b {
+            color: var(--primary-color);
+        }
+        
+        /* Caixa de Dica/Instrução */
+        .instruction-box {
+            background-color: var(--instruction-bg);
+            border: 1px solid #f5cba7;
+            border-left: 5px solid var(--accent-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+        .instruction-box p, .instruction-box li {
+            margin: 0;
+            color: #b9770e;
+        }
+        .instruction-box strong {
+            color: #b9770e;
+        }
+        .instruction-box ul {
+            list-style-type: '❓ ';
+            padding-left: 20px;
+            margin-top: 0.5rem;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: block;
+            margin: 1.5rem auto;
+            border: 1px solid #ddd;
+        }
+        
+        .image-gallery {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .image-gallery .image-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            max-width: 48%;
+        }
+        
+        .image-gallery .image-item img {
+            max-width: 100%;
+        }
+
+        .image-gallery .image-item p {
+            margin-top: 0.5rem;
+            font-style: italic;
+            color: var(--text-color);
+            font-size: 0.9em;
+        }
+
+
+        /* Tabela Interativa */
+        .table-container {
+            overflow-x: auto;
+            margin-top: 1.5rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            text-align: center;
+            min-width: 150px;
+        }
+        thead {
+            background-color: var(--primary-color);
+            color: var(--card-bg-color);
+            font-weight: bold;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+       .interactive-select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            background-color: white;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .correct-cell {
+            background-color: var(--correct-answer-bg) !important;
+        }
+        .incorrect-cell {
+            background-color: var(--incorrect-answer-bg) !important;
+        }
+        .interactive-select:disabled {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border: none;
+            background: transparent;
+            font-weight: bold;
+            color: #34495e;
+        }
+
+        /* Rodapé */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        
+        footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsividade para smartphones */
+        @media (max-width: 900px) {
+            body {
+                display: block;
+            }
+            #side-nav {
+                width: 100%;
+                height: auto;
+                position: static;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+            .container {
+                padding: 1rem;
+            }
+            .image-gallery .image-item {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="side-nav">
+        <h3>Guia da Aula</h3>
+        <ul>
+            <li><a href="#intro">I. Introdução</a></li>
+            <li><a href="#sem-dermato">II. Sem Dermatocrânio</a></li>
+            <li><a href="#palato">III. Comparando o Palato</a></li>
+            <li><a href="#fenestras">IV. A Janela Temporal</a></li>
+            <li><a href="#discussao">V. Discussão e Função</a></li>
+            <li><a href="#jogo">VI. Jogo de Associação</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <header>
+            <h1>Guia Prático de Investigação</h1>
+            <h2>Morfologia Comparada do Dermatocrânio</h2>
+            <div class="author-credit">Elaborado por Prof. Conrado Galdino & Alex Braga</div>
+        </header>
+
+        <main class="container">
+            <section id="intro">
+                <h2><span class="step-number">I.</span> Introdução e Conceitos-Chave</h2>
+                <p>O dermatocrânio, composto por ossos de origem dérmica. Sua morfologia revela adaptações cruciais ao modo de vida de cada um dos grupo sde vertebrados. Nesta aula, investigaremos duas características fundamentais: o tipo de **palato** e a presença de **fenestras temporais**.</p>
+                <b>Objetivos:</b>
+                <ul>
+                    <li>Diferenciar os componentes do crânio (Neurocrânio e Dermatocrânio).</li>
+                    <li>Identificar os tipos de palato (primário e secundário) e relacioná-los à função de trocas gasosas e mastigação.</li>
+                    <li>Classificar os crânios com base nas fenestras temporais (Anápsido, Sinápsido, Diápsido) e entender sua importância funcional.</li>
+                </ul>
+            </section>
+
+            <section id="sem-dermato">
+                <h2><span class="step-number">II.</span> A Condição Ancestral: Sem Dermatocrânio</h2>
+                <h3 class="context-title">Proposição: "Os grupos mais basais de vertebrados atuais não possuem um dermatocrânio ossificado, apresentando um crânio cartilaginoso."</h3>
+                <div class="instruction-box">
+                    <p><strong>Observe os exemplares disponíveis:</strong></p>
+                    <ul>
+                        <li><strong>Lampreia (Agnatha):</strong> Este animal não possui osso algum. Seu crânio é uma estrutura simples e cartilaginosa.</li>
+                        <li><strong>Tubarão/Raia (Chondrichthyes):</strong> A caixa craniana é cartilaginosa e não há dermatocrânio. Esta é a condição para todos os peixes cartilaginosos.</li>
+                    </ul>
+                </div>
+                <div class="image-gallery">
+                    <div class="image-item">
+                        <img src="lamp.jpg" alt="[Imagem da lampréia]">
+                        <p>Lampréia</p>
+                    </div>
+                    <div class="image-item">
+                         <img src="condskull.jpg" alt="[Imagem do crânio de peixe cartilaginoso]">
+                         <p>Crânio de peixe cartilaginoso</p>
+                    </div>
+            </section>
+            
+            <section id="palato">
+                <h2><span class="step-number">III.</span> O Teto da Boca: Comparando o Palato</h2>
+                <h3 class="context-title">Proposição: "A estrutura do palato está diretamente relacionada à eficiência da alimentação e de trocas gasosas."</h3>
+                <p>O <strong>palato primário</strong> é a condição onde as aberturas das coanas se dá diretamente na boca do animal. Já o <strong>palato secundário</strong> é uma estrutura adicional que separa a passagem de ar da cavidade oral, permitindo respirar enquanto se alimenta.</p>
+                
+                <div class="instruction-box">
+                    <p><strong>Investigue a vista ventral dos crânios:</strong></p>
+                    <ul>
+                        <li><strong>Anfíbio e Lagarto (Palato Primário):</strong> Identifique os ossos que formam o teto da boca, como o Vômer, Palatino e Pterigóide. Note que as coanas se abrem diretamente na cavidade oral.</li>
+                        <li><strong>Crocodiliano (Palato Secundário):</strong> Observe como as projeções da Pré-maxila, Maxila e Palatino se fundem na linha mediana para formar o "céu da boca" rígido, que separa a via nasal da oral.</li>
+                        <li><strong>Mamífero (Palato Secundário):</strong> Observe como as projeções da Pré-maxila, Maxila e Palatino se fundem na linha mediana para formar o "céu da boca" rígido, que separa a via nasal da oral.</li>
+                    </ul>
+                </div>
+
+                <div class="image-gallery">
+                    <div class="image-item">
+                        <img src="image_44c8af.png" alt="[Imagem do crânio de anfíbio em vista ventral]">
+                        <p>Anfíbio (Palato Primário)</p>
+                    </div>
+                     <div class="image-item">
+                        <img src="turtle1.png" alt="[Imagem do crânio de tarataruga em vista ventral]">
+                        <p>Crocodiliano (Palato Secundário)</p>
+                    </div>
+                    <div class="image-item">
+                        <img src="image_44cf59.png" alt="[Imagem do crânio de lagarto em vista ventral]">
+                        <p>Lagarto (Palato Primário)</p>
+                    </div>
+                    <div class="image-item">
+                        <img src="crocv.png" alt="[Imagem do crânio de crocodiliano em vista ventral]">
+                        <p>Crocodiliano (Palato Secundário)</p>
+                    </div>
+                     <div class="image-item">
+                        <img src="image_44d013.png" alt="[Imagem do crânio de mamífero em vista ventral]">
+                        <p>Mamífero (Palato Secundário)</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="fenestras">
+                <h2><span class="step-number">IV.</span> "Janelas" Temporais: Fenestras Cranianas</h2>
+                <h3 class="context-title">Proposição: "As aberturas (fenestras) na região temporal do crânio surgiram para otimizar a inserção e a ação da musculatura da mandíbula."</h3>
+                <p>A classificação dos <strong>amniotas</strong> é classicamente baseada na presença e no número dessas aberturas.</p>
+
+                <div class="instruction-box">
+                    <p><strong>Investigue as vistas dorsal e lateral dos crânios:</strong></p>
+                    <ul>
+                        <li><strong>Testudineos:</strong> Observe a ausência de aberturas na região temporal. Esta é a condição ancestral?</li>
+                        <li><strong>Crocodilianos:</strong> A condição diapsida típica!. Localize as fenestras e os ossos que fazem as respectivas delimitações.</li>
+                        <li><strong>Lagartos e Serpentes (Condição Diápsida Modificada):</strong> Tente identificar as fenestras. Também, tente identificar a barra temporal dorsal e ventral.</li>
+                        <li>Em quais grupos de diapsidas as barras dorsais e/ou ventrais perdidas? Identifique quais foram as perdas de óssos</li>
+                        <li><strong>Mamífero (Condição Sinápsida):</strong> Localize a única abertura temporal, que é delimitada pelo arco zigomático.</li>
+                    </ul>
+                </div>
+                 <div class="image-gallery">
+                    <div class="image-item">
+                        <img src="turtle2.png" alt="[Imagem do crânio de tartaruga em vista dorsal]">
+                        <p>Tartaruga</p>
+                    </div>
+                    <div class="image-item">
+                         <img src="image_44cc92.png" alt="[Imagem do crânio de lagarto em vista lateral]">
+                         <p>Lagarto (Diápsido Modificado)</p>
+                    </div>
+                    <div class="image-item">
+                         <img src="RattlesnakeSkullLabel.jpg" alt="[Imagem do crânio de serpente em vista lateral]">
+                         <p>Lagarto (Diápsido Modificado)</p>
+                         <p style="font-variant: small-caps;">Fonte da imgem: Vertebrate Anatomy Snake Skulls em https://www.savalli.us/BIO370/Anatomy/5.SnakeSkullLabel.html</p>
+                    </div>
+                    <div class="image-item">
+                        <img src="Mammalside.jpg" alt="[Imagem do crânio de mamífero em vista dorsal]">
+                        <p>Mamífero (Sinápsido)</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="discussao">
+                <h2><span class="step-number">V.</span> Discussão: Cinese vs. Acinese</h2>
+                <p>A morfologia do dermatocrânio reflete adaptações cruciais para alimentação e bombeamento de ar. A evolução de fenestras temporais, a partir da condição anápsida, otimizou a ação da musculatura, fornecendo pontos de origem e espaço para a expansão muscular, o que permitiu uma eficiência maior no uso da boca com capacidade de mordida mais forte. Simultaneamente, o desenvolvimento do palato secundário em mamíferos e crocodilianos resolveu o conflito entre trocas gasosas e a alimaentação.</p>
+            </section>
+
+            <section id="jogo">
+                <h2><span class="step-number">VI.</span> Jogo de Associação: Quem sou eu?</h2>
+                <p>Para consolidar seu aprendizado, associe cada característica do crânio ao grupo de vertebrados correspondente.</p>
+                <div class="table-container">
+                    <table id="interactive-table">
+                        <thead>
+                            <tr>
+                                <th>Característica do Crânio</th>
+                                <th>Grupo de Vertebrados</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Crânio Diápsido com palato secundário e acinese.</td>
+                                <td data-correct="Crocodiliano"><select class="interactive-select"><option value="">Selecione</option><option>Anfíbio</option><option>Mamífero</option><option>Lagarto</option><option>Crocodiliano</option><option>Tubarão</option></select></td>
+                            </tr>
+                            <tr>
+                                <td>Crânio Sinápsido com palato secundário completo.</td>
+                                <td data-correct="Mamífero"><select class="interactive-select"><option value="">Selecione</option><option>Anfíbio</option><option>Mamífero</option><option>Lagarto</option><option>Crocodiliano</option><option>Tubarão</option></select></td>
+                            </tr>
+                            <tr>
+                                <td>Ausência de dermatocrânio; crânio cartilaginoso.</td>
+                                <td data-correct="Tubarão"><select class="interactive-select"><option value="">Selecione</option><option>Anfíbio</option><option>Mamífero</option><option>Lagarto</option><option>Crocodiliano</option><option>Tubarão</option></select></td>
+                            </tr>
+                            <tr>
+                                <td>Crânio com palato primário de anaminiota.</td>
+                                <td data-correct="Anfíbio"><select class="interactive-select"><option value="">Selecione</option><option>Anfíbio</option><option>Mamífero</option><option>Lagarto</option><option>Crocodiliano</option><option>Tubarão</option></select></td>
+                            </tr>
+                            <tr>
+                                <td>Crânio Diápsido modificado (perda da barra temporal inferior) e palato primário.</td>
+                                <td data-correct="Lagarto"><select class="interactive-select"><option value="">Selecione</option><option>Anfíbio</option><option>Mamífero</option><option>Lagarto</option><option>Crocodiliano</option><option>Tubarão</option></select></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <p>Todos os direitos reservados. Powered by <a href="https://yaiah.com" target="_blank">Yaiah</a></p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- NAVEGAÇÃO ATIVA ---
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('#side-nav a');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            // --- JOGO DA TABELA INTERATIVA ---
+            const interactiveSelects = document.querySelectorAll('.interactive-select');
+            interactiveSelects.forEach(select => {
+                select.addEventListener('change', (event) => {
+                    const selectedValue = event.target.value;
+                    const parentCell = event.target.parentElement;
+                    const correctAnswer = parentCell.dataset.correct;
+
+                    // Remove classes de feedback anteriores
+                    parentCell.classList.remove('correct-cell', 'incorrect-cell');
+
+                    if (selectedValue === correctAnswer) {
+                        parentCell.classList.add('correct-cell');
+                        event.target.disabled = true;
+                    } else if (selectedValue !== "") {
+                        parentCell.classList.add('incorrect-cell');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
