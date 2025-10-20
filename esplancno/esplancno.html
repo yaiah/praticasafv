@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Prático: A Evolução do Esplancnocrânio</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e67e22;
+            --background-color: #ecf0f1;
+            --text-color: #34495e;
+            --card-bg-color: #ffffff;
+            --instruction-bg: #fef5e7;
+            --correct-answer-bg: #d4edda;
+            --incorrect-answer-bg: #f8d7da;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7; margin: 0; background-color: var(--background-color);
+            color: var(--text-color); display: flex;
+        }
+        #side-nav {
+            width: 250px; position: fixed; top: 0; left: 0; height: 100vh;
+            background-color: var(--primary-color); padding-top: 20px; overflow-y: auto;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1); z-index: 1000;
+        }
+        #side-nav h3 {
+            color: #ecf0f1; text-align: center; padding: 0 15px;
+            font-size: 1.2em; margin-bottom: 20px;
+        }
+        #side-nav ul { list-style-type: none; padding: 0; margin: 0; }
+        #side-nav li a {
+            display: block; color: #bdc3c7; padding: 12px 20px; text-decoration: none;
+            font-size: 0.95em; transition: all 0.3s ease; border-left: 4px solid transparent;
+        }
+        #side-nav li a:hover { background-color: #34495e; color: #ffffff; }
+        #side-nav li a.active {
+            background-color: #4a627a; color: #ffffff; font-weight: bold;
+            border-left: 4px solid var(--accent-color);
+        }
+        .main-content { margin-left: 250px; width: calc(100% - 250px); }
+        header {
+            background-color: var(--card-bg-color); padding: 1.5rem; text-align: center;
+            border-bottom: 4px solid var(--secondary-color);
+        }
+        header h1 { color: var(--primary-color); margin: 0; font-size: 2.2em; }
+        .container { max-width: 950px; margin: 0 auto; padding: 2rem; }
+        section {
+            background-color: var(--card-bg-color); margin-bottom: 2rem;
+            padding: 1.5rem 2rem; border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        h2 {
+            color: var(--primary-color); border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px; margin-top: 0;
+        }
+        .instruction-box {
+            background-color: var(--instruction-bg); border-left: 5px solid var(--accent-color);
+            padding: 1rem; margin: 1.5rem 0; border-radius: 8px;
+        }
+        .instruction-box ul { list-style-type: '👉'; padding-left: 20px; }
+        .question { font-style: italic; color: var(--accent-color); }
+        .image-placeholder {
+            background-color: #e9ecef; border: 2px dashed #ced4da;
+            border-radius: 8px; padding: 2rem; text-align: center;
+            color: #6c757d; margin: 1.5rem 0;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: block;
+            margin: 1.5rem auto;
+            border: 1px solid #ddd;
+        }
+        
+        .image-gallery {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .image-gallery .image-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            max-width: 48%;
+        }
+        
+        .image-gallery .image-item img {
+            max-width: 100%;
+        }
+
+        .image-gallery .image-item p {
+            margin-top: 0.5rem;
+            font-style: italic;
+            color: var(--text-color);
+            font-size: 0.9em;
+        }
+          .image-placeholder2 {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        .image-placeholder2 img {
+            max-width: 450px;
+            height: auto;
+        }
+        .table-container { overflow-x: auto; margin-top: 1.5rem; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.95em; }
+        th, td { border: 1px solid #ccc; padding: 12px; text-align: left; vertical-align: top; }
+        thead { background-color: var(--primary-color); color: var(--card-bg-color); }
+        .interactive-select {
+            width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc;
+            background-color: white; cursor: pointer; font-size: 1em;
+        }
+        .correct-cell { background-color: var(--correct-answer-bg) !important; }
+        .incorrect-cell { background-color: var(--incorrect-answer-bg) !important; }
+        .interactive-select:disabled {
+            appearance: none; -webkit-appearance: none; -moz-appearance: none;
+            border: none; background: transparent; font-weight: bold; color: #34495e;
+        }
+        @media (max-width: 900px) {
+            body { display: block; }
+            #side-nav { width: 100%; height: auto; position: static; }
+            .main-content { margin-left: 0; width: 100%; }
+            .container { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="side-nav">
+        <h3>Roteiro da Prática</h3>
+        <ul>
+            <li><a href="#intro" class="active">I. Introdução</a></li>
+            <li><a href="#estacao1">II. Estação 1: Agnatha</a></li>
+            <li><a href="#estacao2">III. Estação 2: Gnathostomata</a></li>
+            <li><a href="#estacao3">IV. Estação 3: Tetrápodes</a></li>
+            <li><a href="#estacao4">V. Estação 4: Mamíferos</a></li>
+            <li><a href="#sintese">VI. Síntese e Indagação</a></li>
+            <li><a href="#jogo">VII. Jogo de Consolidação</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <header>
+            <h1>Guia Prático: A Evolução do Esplancnocrânio</h1>
+        </header>
+
+        <main class="container">
+            <section id="intro">
+                <h2>I. Introdução: A Origem de Tudo</h2>
+                <p>O Esplancnocrânio derivada dos arcos faríngeos. Sua história é uma jornada dese o suporte a estruturas envolvidas nas trocas gasosas até o processo de percepção de ondas mecânicas. Nesta prática, vamos traçar a homologia dessas estruturas, relacionando as mudanças estruturais com as transições funcionais que definiram a evolução dos vertebrados.</p>
+            </section>
+            
+            <section id="estacao1">
+                <h2>II. Estação 1: A Condição Ancestral – Agnatha</h2>
+                <p><strong>Proposição Central:</strong> "Nos agnatos, os arcos faríngeos têm função de suporte as lamelas breanquiais."</p>
+                <div class="instruction-box">
+                    <ul>
+                        <li><strong>Observe as câmaras branquiais" da Lampreia:</strong> Localize os arcos faríngeos [cartilaginosos].</li>
+                        <li><strong>Investigue a boca:</strong> Verifique a ausência de uma mandíbula articulada (a condição <strong>agnata</strong>).</li>
+                        <li><span class="question"> Como a ausência de mandíbula se relaciona a alimentação neste grupo?</span></li>
+                    </ul>
+                </div>
+                <div class="image-placeholder"><img src=lamprey.jpg>Exemplar de lampreia com a região dos arcos faríngeos exposta.</div>
+            </section>
+
+            <section id="estacao2">
+                <h2>III. Estação 2: A Revolução da Mordida – Gnathostomata</h2>
+                <p><strong>Proposição Central:</strong> "Os dois primeiros arcos faríngeos foram cooptados para formar uma mandíbula articulada, uma inovação que redefiniu a história dos vertebrados."</p>
+                <div class="instruction-box">
+                    <ul>
+                        <li><strong>Identifique os derivados dos arcos no crânio do Condrictie:</strong>
+                            <ul>
+                                <li><strong>1º Arco (Mandibular):</strong> cartilagem palato-quadrado e mandíbula cartilagem de Meckel.</li>
+                                <li><strong>2º Arco (Hioide):</strong> Cartilagem hiomandibular, que suspende a maxila.</li>
+                            </ul>
+                        </li>
+                        <li><span class="question">Como a boca de um tubarão (gnatostomado) se diferencia da de uma lampreia? Que nova capacidade essa estrutura confere?</span></li>
+                        <li><span class="question">O que aconteceu com o número de arcos dedicados à respiração nos condrictes em relação aos agnatos? Qual a relação disso e o surgimento da mandíbula?</span></li>
+                    </ul>
+                </div>
+                <div class="image-placeholder"><img src="condricesp.png"> Crânio de Peixe Cartilaginoso.</div>
+            </section>
+
+            <section id="estacao3">
+                <h2>IV. Estação 3: A Transição para a Terra – Anfíbios e Sauropsidas</h2>
+                <p><strong>Proposição Central:</strong> "Com a vida em terra, estruturas do esplancnocrânio adiquirem novas funções!"</p>
+                <div class="instruction-box">
+                    <ul>
+                        <li><strong>No crânio do Anfíbio:</strong>
+                            <ul>
+                                <li>Localize a articulação da mandíbula, formada pelos ossos <strong>articular</strong> e <strong>quadrado</strong>.</li>
+                                <li>Lembre-se de que neste grupo passa a existir a  <strong>columela</strong>. Uma estrutura derivada da <strong>hiomandíbula</strong>, agora com a função de perceber ondas mecÂnicas.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Nos crânios de Sauropsidas (Jacaré e Ave):</strong>
+                            <ul>
+                                <li>Reconheça a mesma articulação (articular-quadrado).</li>
+                                <li><strong>Tarefa:</strong> Observe a mandíbula do jacaré. Com o auxílio da apostila, note os múltiplos ossos que a compõem.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="image-gallery">
+                    <div class="image-placeholder"><img src="AmphMorphology-Manual-I.027.png"> Esquema do crânio de Anfíbio</div>
+                    <div class="image-placeholder"><img src="JacareMorphology-Manual-I.039.png"> Esquema do crânio de Jacaré</div>
+                    <div class="image-placeholder"><img src="SquamMorphology-Manual-I.033.png">Esquema do crânio de Squamata</div>
+                </div>
+            </section>
+
+            <section id="estacao4">
+                <h2>V. Estação 4: O Refinamento da Audição – Mamíferos</h2>
+                <p><strong>Proposição Central:</strong> "Nos mamíferos, a simplificação da mandíbula permitiu que ossos da antiga articulação fossem cooptados para o ouvido médio, resultando em uma audição mais sensível."</p>
+                <div class="instruction-box">
+                    <ul>
+                        <li><span class="question">Qual a principal diferença entre a mandíbula de um mamífero e a de um sauropsida?</span></li>
+                        <li><strong>Identifique a nova suspensão:</strong> Note que a articulação agora ocorre entre o <strong>dentário</strong> e o <strong>temporal</strong>.</li>
+                        <li><span class="question">Se o articular e o quadrado não fazem mais a articulação, para onde eles foram?</span> (Dica: Pense no ouvido médio).</li>
+                    </ul>
+                </div>
+                <div class="image-placeholder2"><img src="image_44d013.png"><img src="mamalesp.png"><span> Crânio de Mamífero.</span></div>
+            </section>
+
+            <section id="sintese">
+                <h2>VI. Síntese e Indagação Final</h2>
+                <p>Após as investigações, reflita sobre as grandes questões que conectam a evolução do esplancnocrânio com a história dos vertebrados.</p>
+                <div class="instruction-box">
+                    <ul>
+                        <li><span class="question">Qual a relação entre a evolução do esplancnocrânio e a percepção de ondas mecânicas (som)?</span></li>
+                        <li><span class="question">Qual a relação disso com a transição água-terra na história dos vertebrados?</span></li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="jogo">
+                <h2>VII. Jogo de Consolidação</h2>
+                <p>Associe cada estrutura derivada à sua origem ou característica principal.</p>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr><th>Estrutura Derivada</th><th>Origem / Característica</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Maxila e Mandíbula (nos Gnatostomados)</td>
+                                <td data-correct="Arco 1"><select class="interactive-select"><option value="">Selecione...</option><option>Arco 1</option><option>Arco 2</option><option>Arcos 3+</option></select></td>
+                            </tr>
+                            <tr>
+                                <td>Estribo / Columela (nos Tetrápodes)</td>
+                                <td data-correct="Arco 2"><select class="interactive-select"><option value="">Selecione...</option><option>Arco 1</option><option>Arco 2</option><option>Arcos 3+</option></select></td>
+                            </tr>
+                            <tr>
+                                <td>Martelo e Bigorna (nos Mamíferos)</td>
+                                <td data-correct="Arco 1"><select class="interactive-select"><option value="">Selecione...</option><option>Arco 1</option><option>Arco 2</option><option>Arcos 3+</option></select></td>
+                            </tr>
+                            <tr>
+                                <td>Aparato Hioide (suporte da língua)</td>
+                                <td data-correct="Arcos 3+"><select class="interactive-select"><option value="">Selecione...</option><option>Arco 1</option><option>Arco 2</option><option>Arcos 3+</option></select></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('#side-nav a');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, { threshold: 0.5 });
+            sections.forEach(section => observer.observe(section));
+
+            const interactiveSelects = document.querySelectorAll('.interactive-select');
+            interactiveSelects.forEach(select => {
+                select.addEventListener('change', (event) => {
+                    const selectedValue = event.target.value;
+                    const parentCell = event.target.parentElement;
+                    const correctAnswer = parentCell.dataset.correct;
+                    parentCell.classList.remove('correct-cell', 'incorrect-cell');
+                    if (selectedValue === correctAnswer) {
+                        parentCell.classList.add('correct-cell');
+                        event.target.disabled = true;
+                    } else if (selectedValue !== "") {
+                        parentCell.classList.add('incorrect-cell');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
