@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Prático: O Eixo Vertebral</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e67e22;
+            --background-color: #ecf0f1;
+            --text-color: #34495e;
+            --card-bg-color: #ffffff;
+            --instruction-bg: #fdf8f2;
+            --placeholder-bg: #f8f9fa;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.7; margin: 0; background-color: var(--background-color);
+            color: var(--text-color); display: flex;
+        }
+        #side-nav {
+            width: 280px; position: fixed; top: 0; left: 0; height: 100vh;
+            background-color: var(--primary-color); padding-top: 20px; overflow-y: auto;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1); z-index: 1000;
+        }
+        #side-nav h3 {
+            color: #ecf0f1; text-align: center; padding: 0 15px;
+            font-size: 1.2em; margin-bottom: 20px; font-weight: 600;
+        }
+        #side-nav ul { list-style-type: none; padding: 0; margin: 0; }
+        #side-nav li a {
+            display: block; color: #bdc3c7; padding: 12px 20px; text-decoration: none;
+            font-size: 0.95em; transition: all 0.3s ease; border-left: 4px solid transparent;
+        }
+        #side-nav li a:hover { background-color: #34495e; color: #ffffff; }
+        #side-nav li a.active {
+            background-color: #4a627a; color: #ffffff; font-weight: 600;
+            border-left: 4px solid var(--accent-color);
+        }
+        .main-content { margin-left: 280px; width: calc(100% - 280px); }
+        header {
+            background-color: var(--card-bg-color); padding: 1.5rem 2rem; text-align: center;
+            border-bottom: 4px solid var(--secondary-color);
+        }
+        header h1 { color: var(--primary-color); margin: 0; font-size: 2.2em; font-weight: 700; }
+        .container { max-w: 1000px; margin: 0 auto; padding: 2rem; }
+        section {
+            background-color: var(--card-bg-color); margin-bottom: 2rem;
+            padding: 1.5rem 2rem; border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        h2 {
+            color: var(--primary-color); border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px; margin-top: 0; font-size: 1.8em; font-weight: 600;
+        }
+        /* Caixa de Instrução de Investigação */
+        .instruction-box {
+            background-color: var(--instruction-bg); border-left: 5px solid var(--accent-color);
+            padding: 1rem 1.5rem; margin: 1.5rem 0; border-radius: 8px;
+        }
+        .instruction-box ul { list-style-type: '👉'; padding-left: 20px; margin-top: 0.5rem; }
+        .instruction-box li { margin-bottom: 0.5rem; }
+        .instruction-box strong { color: var(--accent-color); font-weight: 600; }
+        
+        /* Placeholder de Imagem */
+        .image-placeholder {
+            background-color: var(--placeholder-bg); border: 2px dashed #ced4da;
+            border-radius: 8px; padding: 2rem; text-align: center;
+            color: #6c757d; margin: 1.5rem auto; font-style: italic;
+        }
+        .image-gallery {
+            display: flex; gap: 1rem; justify-content: center;
+            align-items: flex-start; flex-wrap: wrap; margin-top: 1.5rem;
+        }
+        .image-gallery .image-placeholder { width: 100%; max-width: 400px; }
+        
+        /* Tabela Interativa */
+        .table-container { overflow-x: auto; margin-top: 1.5rem; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.95em; }
+        th, td { border: 1px solid #ccc; padding: 12px; text-align: left; vertical-align: top; }
+        thead { background-color: var(--primary-color); color: var(--card-bg-color); }
+        .interactive-select {
+            width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc;
+            background-color: white; cursor: pointer; font-size: 1em;
+        }
+        .correct-cell { background-color: #d4edda !important; }
+        .incorrect-cell { background-color: #f8d7da !important; }
+        .interactive-select:disabled {
+            appearance: none; -webkit-appearance: none; -moz-appearance: none;
+            border: none; background: transparent; font-weight: bold; color: #34495e;
+        }
+        @media (max-width: 900px) {
+            body { display: block; }
+            #side-nav { width: 100%; height: auto; position: static; }
+            .main-content { margin-left: 0; width: 100%; }
+            .container { padding: 1rem; }
+        }
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        
+        footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <nav id="side-nav">
+        <h3>Roteiro da Prática</h3>
+        <ul>
+            <li><a href="#intro" class="active">I. Estrutura Básica</a></li>
+            <li><a href="#classificacao">II. Classificação do Corpo</a></li>
+            <li><a href="#estacao1">III. Estação 1: Peixe</a></li>
+            <li><a href="#estacao2">IV. Estação 2: Anfíbio</a></li>
+            <li><a href="#estacao3">V. Estação 3: Répteis</a></li>
+            <li><a href="#estacao4">VI. Estação 4: Aves</a></li>
+            <li><a href="#estacao5">VII. Estação 5: Mamíferos</a></li>
+            <li><a href="#jogo">VIII. Jogo de Consolidação</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <header>
+            <h1>Guia Prático: O Eixo Vertebral</h1>
+            <h2 class="text-xl font-normal text-gray-700 mt-2">Anatomia Funcional das Vértebras e Coluna</h2>
+            <h2 class="text-xl font-normal text-gray-700 mt-2">Prof. Conrado A. B. Galdino</h2>
+        </header>
+
+        <main class="container">
+            <section id="intro">
+                <h2>I. Estrutura Básica da Vértebra</h2>
+                <div class="instruction-box">
+                    <p>Inicie a investigação observando o modelo esquemático de uma vértebra-tipo, baseado nas páginas 2-3 da apostila.</p>
+                </div>
+                
+                <div class="image-placeholder">
+                    <img src="esquemavertebra.png">
+                </div>
+                
+                <div class="instruction-box">
+                    <strong>Roteiro de Investigação (Bancada):</strong>
+                    <p>Agora, explore as vértebras avulsas de diversos grupos sobre a mesa. Tente identificar os seguintes componentes:</p>
+                   <div class="image-placeholder">
+                    <img src="coponent_vert.png">
+                </div>
+                    <ul>
+                        <li>Corpo ou Centro Vertebral</li>
+                        <li>Arco Neural (forma o Canal Neural)</li>
+                        <li>Arco Hemal (forma o Canal Hemal)</li>
+                        <li>Processos: Espinha Neural, Diapófise, Parapófise, Pleurapófise</li>
+                        <li>Zigapófises Cranial (pré) e Caudal (pós)</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="classificacao">
+                <h2>II. Classificação do Corpo Vertebral</h2>
+                <div class="instruction-box">
+                    <strong>Roteiro de Investigação (Bancada):</strong>
+                    <p>A forma das faces cranial e caudal do corpo vertebral determina a mobilidade da coluna. Observe as vértebras sobre a bancada e classifique-as segundo o corpo vertebral, consultando a página 4 da apostila.</p>
+                    <ul>
+                        <li><strong>Acélica:</strong> Ambas as faces planas (ex: Mamíferos).</li>
+                        <li><strong>Anficélica:</strong> Ambas as faces côncavas (ex: Peixes).</li>
+                        <li><strong>Procélica:</strong> Face cranial côncava, caudal convexa (ex: Répteis).</li>
+                        <li><strong>Opistocélica:</strong> Face cranial convexa, caudal côncava (ex: Ungulados).</li>
+                        <li><strong>Heterocélica:</strong> Faces em forma de sela (ex: Aves).</li>
+                    </ul>
+                </div>
+                <div class="image-placeholder">
+                    <img src="tpcorpovert.png">
+                </div>
+            </section>
+
+            <section id="estacao1">
+                <h2>III. Estação 1: A Coluna Homogênea (Peixe)</h2>
+                <div class="instruction-box">
+                    <ul>
+                        <li><strong>Material:</strong> Esqueleto de Peixe.</li>
+                        <li><strong>Investigação:</strong> A coluna é regionalizada?</li>
+                        <li><strong>Observação:</strong> Diferencie as vértebras do <strong>tronco</strong> das <strong>caudais</strong>. A pista é a presença do <strong>Arco Hemal</strong> (para proteger vasos) nas caudais. Identifique o corpo <strong>anficélico</strong>.</li>
+                        <li><strong>Conclusão:</strong> A coluna possui baixa regionalização, sendo adaptada primariamente à natação.</li>
+                    </ul>
+                </div>
+                <div class="image-placeholder"><img src="peixes.png"></div>
+            </section>
+
+            <section id="estacao2">
+                <h2>IV. Estação 2: A Coluna para o Salto (Anfíbio)</h2>
+                <div class="instruction-box">
+                    <ul>
+                        <li><strong>Material:</strong> Esqueleto de Anfíbio Anuro (sapo/rã).</li>
+                        <li><strong>Investigação:</strong> O que mudou na transição para a terra?</li>
+                        <li><strong>Observação:</strong> Identifique a *única* vértebra **cervical (Atlas)**, o número reduzido de vértebras do tronco, a *única* vértebra **sacral** (que se liga à cintura pélvica) e a fusão das vértebras caudais no **Uróstilo**.</li>
+                        <li><strong>Conclusão:</strong> Uma estrutura curta, rígida e especializada para absorver o impacto do salto.</li>
+                    </ul>
+                </div>
+                <div class="image-placeholder"><img src="anfibio.png"></div>
+            </section>
+
+            <section id="estacao3">
+                <h2>V. Estação 3: Diversificação em Terra (Répteis)</h2>
+                <div class="instruction-box">
+                    <ul>
+                        <li><strong>Material:</strong> Esqueleto de Serpente e Crocodiliano.</li>
+                        <li><strong>Investigação:</strong> Como diferentes répteis adaptaram a coluna?</li>
+                        <li><strong>Observação (Serpente):</strong> Identifique as articulações acessórias <strong>Zigósfena</strong> e <strong>Zigantro</strong>. Elas fornecem grande estabilidade e evitam a torção da coluna durante a locomoção ondulatória.</li>
+                        <li><strong>Observação (Crocodiliano):</strong> Note a clara regionalização (Cervical, Torácica, Lombar, Sacral, Caudal). Nas vértebras caudais, identifique os <strong>Ossos Chevronicos</strong> (processos hemais).</li>
+                    </ul>
+                </div>
+                <div class="image-gallery">
+                    <div class="image-placeholder"><img src="snakes.png"></div>
+                    <div class="image-placeholder"><img src="crocodiliano.png"</div>
+                </div>
+            </section>
+
+            <section id="estacao4">
+                <h2>VI. Estação 4: A Fuselagem Rígida (Aves)</h2>
+                <div class="instruction-box">
+                    <ul>
+                        <li><strong>Material:</strong> Esqueleto de Ave.</li>
+                        <li><strong>Investigação:</strong> Como a coluna se adapta ao voo?</li>
+                        <li><strong>Observação (Pescoço):</strong> Note o grande número de vértebras cervicais com corpo <strong>heterocélico</strong> (selar), permitindo extrema mobilidade.</li>
+                        <li><strong>Observação (Tronco):</strong> Identifique as grandes fusões que criam rigidez para o voo: o <strong>Sinsacro</strong> (fusão das últimas torácicas, lombares, sacrais e primeiras caudais) e o <strong>Pigóstilo</strong> (fusão das últimas caudais para suporte das penas da cauda).</li>
+                        <li><strong>Conclusão:</strong> Rigidez máxima no tronco para o voo, contrastando com mobilidade extrema no pescoço.</li>
+                    </ul>
+                </div>
+                <div class="image-placeholder"><img src="birds.png"></div>
+            </section>
+
+            <section id="estacao5">
+                <h2>VII. Estação 5: Mobilidade Cefálica (Mamíferos)</h2>
+                <div class="instruction-box">
+                    <ul>
+                        <li><strong>Material:</strong> Esqueleto de Mamífero.</li>
+                        <li><strong>Investigação:</strong> Qual a principal especialização da coluna dos mamíferos?</li>
+                        <li><strong>Observação (Regiões):</strong> Identifique claramente as 5 regiões: Cervical, Torácica (com costelas), Lombar (sem costelas), Sacral (fundida na pelve) e Caudal.</li>
+                        <li><strong>Observação (Foco):</strong> Investigue o complexo das duas primeiras vértebras cervicais.
+                            <ul>
+                                <li><strong>Atlas (C1):</strong> Não possui corpo vertebral; articula-se com o crânio (movimento de "sim").</li>
+                                <li><strong>Axis (C2):</strong> Possui o <strong>Processo Odontóide</strong>, que age como um pivô para o Atlas (movimento de "não").</li>
+                            </ul>
+                        </li>
+                        <li><strong>Conclusão:</strong> Coluna altamente regionalizada e com especialização cervical única para a mobilidade da cabeça.</li>
+                    </ul>
+                </div>
+                <div class="image-placeholder"><img src="atalsaxis.png"></div>
+                <div class="image-placeholder"><img src="mamalsregion.png"></div>
+            </section>
+            
+            <section id="jogo">
+                <h2>VIII. Jogo de Consolidação</h2>
+                <p>Para revisar, associe cada especialização vertebral ao grupo de vertebrados correspondente.</p>
+                <div class="table-container">
+                    <table class="w-full">
+                        <thead>
+                            <tr>
+                                <th class="p-3 text-left">Especialização da Coluna</th>
+                                <th class="p-3 text-left">Grupo de Vertebrados</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b">
+                                <td class="p-3"><strong>Sinsacro</strong> e <strong>Pigóstilo</strong> (fusões extremas)</td>
+                                <td class="p-3" data-correct="Aves"><select class="interactive-select"><option value="">Selecione...</option><option>Peixe</option><option>Anfíbio</option><option>Serpente</option><option>Aves</option><option>Mamífero</option></select></td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="p-3">Complexo <strong>Atlas/Axis</strong> com processo odontóide</td>
+                                <td class="p-3" data-correct="Mamífero"><select class="interactive-select"><option value="">Selecione...</option><option>Peixe</option><option>Anfíbio</option><option>Serpente</option><option>Aves</option><option>Mamífero</option></select></td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="p-3">Corpo <strong>anficélico</strong> e <strong>Arco Hemal</strong> nas caudais</td>
+                                <td class="p-3" data-correct="Peixe"><select class="interactive-select"><option value="">Selecione...</option><option>Peixe</option><option>Anfíbio</option><option>Serpente</option><option>Aves</option><option>Mamífero</option></select></td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="p-3">Articulações acessórias (<strong>Zigósfena</strong> e <strong>Zigantro</strong>)</td>
+                                <td class="p-3" data-correct="Serpente"><select class="interactive-select"><option value="">Selecione...</option><option>Peixe</option><option>Anfíbio</option><option>Serpente</option><option>Aves</option><option>Mamífero</option></select></td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="p-3"><strong>Uróstilo</strong> (fusão caudal) e apenas uma vértebra cervical</td>
+                                <td class="p-3" data-correct="Anfíbio"><select class="interactive-select"><option value="">Selecione...</option><option>Peixe</option><option>Anfíbio</option><option>Serpente</option><option>Aves</option><option>Mamífero</option></select></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+<footer>
+            <p>Todos os direitos reservados. Powered by <a href="https://yaiah.com" target="_blank">Yaiah</a></p>
+            <p>Figuras de: NASCIMENTO, Luciana Barreto. Atlas - parte 2: Esqueleto axial pós-craniano e apendicular. Belo Horizonte: Pontifícia Universidade Católica de Minas Gerais, 2015. Apostila da disciplina de Anatomia Funcional dos Vertebrados, Curso de Ciências Biológicas.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- NAVEGAÇÃO ATIVA ---
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('#side-nav a');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, { threshold: 0.5 });
+            sections.forEach(section => observer.observe(section));
+
+            // --- JOGO DA TABELA INTERATIVA ---
+            const interactiveSelects = document.querySelectorAll('.interactive-select');
+            interactiveSelects.forEach(select => {
+                select.addEventListener('change', (event) => {
+                    const selectedValue = event.target.value;
+                    const parentCell = event.target.parentElement;
+                    const correctAnswer = parentCell.dataset.correct;
+                    parentCell.classList.remove('correct-cell', 'incorrect-cell');
+                    if (selectedValue === correctAnswer) {
+                        parentCell.classList.add('correct-cell');
+                        event.target.disabled = true;
+                    } else if (selectedValue !== "") {
+                        parentCell.classList.add('incorrect-cell');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
