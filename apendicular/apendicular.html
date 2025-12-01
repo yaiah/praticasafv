@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investigação Visual: O Esqueleto Apendicular</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #d35400;
+            --bg-color: #f8f9fa;
+            --text-color: #34495e;
+            --card-bg: #ffffff;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+        }
+
+        /* Menu Lateral */
+        #side-nav {
+            width: 260px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            overflow-y: auto;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+            z-index: 50;
+        }
+
+        #side-nav h3 {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        #side-nav a {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: all 0.3s;
+            border-left: 4px solid transparent;
+        }
+
+        #side-nav a:hover, #side-nav a.active {
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+            border-left-color: var(--accent-color);
+        }
+
+        /* Conteúdo Principal */
+        .main-content {
+            margin-left: 260px;
+            padding: 2rem;
+            max-width: 1200px;
+            box-sizing: border-box; /* Garante que padding não aumente a largura total */
+        }
+
+        header {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+            text-align: center;
+            border-bottom: 4px solid var(--secondary-color);
+        }
+
+        section {
+            background-color: var(--card-bg);
+            margin-bottom: 2.5rem;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid #eee;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        /* Estilos das Imagens */
+        .img-container {
+            text-align: center;
+            margin: 1.5rem 0;
+            background-color: #f1f2f6;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #e1e1e1;
+        }
+
+        .img-container img {
+            max-width: 100%;
+            height: auto;
+            max-height: 400px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .img-container img:hover {
+            transform: scale(1.02);
+        }
+
+        .img-caption {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+
+        /* Caixas de Investigação */
+        .investigation-box {
+            background-color: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .investigation-title {
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .investigation-box ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .investigation-box li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .investigation-box li::before {
+            content: "👁️";
+            position: absolute;
+            left: 0;
+            top: 2px;
+        }
+
+        /* Tabela Interativa Ajustada */
+        .table-container {
+            overflow-x: auto; /* Permite rolagem horizontal */
+            -webkit-overflow-scrolling: touch; /* Rolagem suave em iOS */
+            margin-top: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding-bottom: 5px; /* Espaço para a barra de rolagem não cobrir o conteúdo */
+        }
+
+        table {
+            width: 100%;
+            min-width: 600px; /* Garante que a tabela não fique esmagada, forçando o scroll se necessário */
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: left;
+            padding: 1rem;
+            white-space: nowrap; /* Títulos em uma linha */
+        }
+
+        td {
+            border: 1px solid #e2e8f0;
+            padding: 1rem;
+            background-color: white;
+            vertical-align: top;
+        }
+
+        .interactive-select {
+            width: 100%;
+            padding: 0.5rem;
+            border-radius: 4px;
+            border: 1px solid #cbd5e1;
+            background-color: white;
+            cursor: pointer;
+        }
+
+        .correct-cell { background-color: #dcfce7 !important; }
+        .incorrect-cell { background-color: #fee2e2 !important; }
+
+        /* Responsividade Melhorada */
+        @media (max-width: 900px) {
+            #side-nav {
+                width: 100%;
+                height: auto;
+                position: static;
+                padding: 1rem;
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 1rem; /* Reduz padding lateral para ganhar espaço */
+            }
+            section {
+                padding: 1rem; /* Reduz padding interno dos cartões */
+            }
+            .investigation-box {
+                padding: 1rem;
+            }
+            h1 { font-size: 1.5rem; }
+            h2 { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="side-nav">
+        <h3>Roteiro Visual</h3>
+        <a href="#intro" class="active">I. Introdução</a>
+        <a href="#station1">II. Peixes: A Série Cleitral</a>
+        <a href="#station2">III. Anfíbios: Transição</a>
+        <a href="#station3">IV. Sauropsidas: Diversidade</a>
+        <a href="#station4">V. O Mistério do Crocodilo</a>
+        <a href="#station5">VI. Aves: Adaptação ao Voo</a>
+        <a href="#jogo">VII. Jogo de Consolidação</a>
+    </nav>
+
+    <div class="main-content">
+        <header>
+            <h1 class="text-3xl font-bold text-gray-800">Investigação Visual: O Esqueleto Apendicular</h1>
+            <p class="text-gray-600 mt-2">Analise as imagens anatómicas para desvendar a evolução dos membros nos vertebrados.</p>
+        </header>
+
+        <section id="intro">
+            <h2>I. O Problema de Estudo</h2>
+            <p>Como as cinturas escapular e pélvica mudaram para permitir que os vertebrados saíssem da água e conquistassem a terra e o ar? Nesta aula, você usará evidências visuais diretas para responder a essa pergunta.</p>
+        </section>
+
+        <!-- ESTAÇÃO 1: PEIXES -->
+        <section id="station1">
+            <h2>II. Peixes: A Conexão Craniana</h2>
+            <p>Observe a cintura peitoral de um peixe primitivo.</p>
+            
+            <div class="img-container">
+                <img src="celtro.png" alt="Cintura Peitoral de Peixe Ósseo (Amia)">
+                <div class="img-caption">Fig 1. Série do Cleitro em Actinopterygii primitivo.</div>
+            </div>
+
+            <div class="investigation-box">
+                <div class="investigation-title">Desafio de Observação:</div>
+                <ul>
+                    <li>Localize o osso <strong>Pós-temporal (Posttemporal)</strong> no topo da figura. Note que ele conecta a cintura diretamente ao crânio. <strong>Consequência:</strong> Um peixe pode virar a cabeça independentemente do corpo?</li>
+                    <li>Identifique o <strong>Cleitro (Cleithrum)</strong>. Compare seu tamanho com o <strong>Escápulo-coracóide (Scapulocoracoid)</strong>. Qual parece ser o osso dominante e qual serve de base para a nadadeira?</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ESTAÇÃO 2: ANFÍBIOS -->
+        <section id="station2">
+            <h2>III. Anfíbios: A Libertação da Cabeça</h2>
+            <p>Com a transição para a terra, a cintura escapular se separa do crânio e a pélvica se conecta à coluna.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="img-container">
+                    <img src="EscapAnfib.png" alt="Cintura Escapular de Anfíbio">
+                    <div class="img-caption">Fig 2. Cintura Escapular (Ventral e Lateral)</div>
+                </div>
+                <div class="img-container">
+                    <img src="pelvcAnfib2.png" alt="Cintura Pélvica de Anfíbio com Coluna">
+                    <div class="img-caption">Fig 3. Conexão Pélvica-Axial</div>
+                </div>
+            </div>
+
+            <div class="investigation-box">
+                <div class="investigation-title">Desafio de Observação:</div>
+                <ul>
+                    <li><strong>Na Fig 2:</strong> Procure pelos ossos da "série do cleitro" que vimos no peixe. Eles ainda são dominantes? O que aconteceu com a <strong>Escápula</strong> e o <strong>Coracóide</strong> em termos de tamanho e importância?</li>
+                    <li><strong>Na Fig 3:</strong> Siga a seta "Vértebra Sacral". Observe como o <strong>Ílio</strong> se projeta para se conectar a ela. Por que essa conexão óssea firme é necessária para um animal que salta, mas não para um que nada?</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ESTAÇÃO 3: Sauropsidas -->
+        <section id="station3">
+            <h2>IV. Sauropsidas: Diversidade e Apoio</h2>
+            <p>Nos Sauropsidas, observamos variações na orientação dos ossos pélvicos.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="img-container">
+                    <img src="peitoralSauropsid.jpg" alt="Cintura Escapular de Jacaré e Tartaruga">
+                    <div class="img-caption">Fig 4. Comparação Escapular: Jacaré vs Tartaruga</div>
+                </div>
+                <div class="img-container">
+                    <img src="PelvicSauropsid.jpg" alt="Cintura Pélvica de Lagarto">
+                    <div class="img-caption">Fig 5. Pélvis de Lagarto (Trirradiada)</div>
+                </div>
+            </div>
+
+            <div class="investigation-box">
+                <div class="investigation-title">Desafio de Observação:</div>
+                <ul>
+                    <li><strong>Na Fig 4:</strong> Observe a <strong>Cavidade Glenóide</strong>. Ela é formada por quais ossos? Apenas a escápula ou a escápula + coracóide?</li>
+                    <li><strong>Na Fig 5:</strong> Identifique o <strong>Acetábulo</strong>. Verifique se os três ossos (Ílio, Ísquio e Púbis) se encontram exatamente no centro dele para formar a articulação.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ESTAÇÃO 4: CROCODILOS -->
+        <section id="station4">
+            <h2>V. O Mistério do Crocodilo</h2>
+            <p>Os crocodilianos possuem uma configuração pélvica única entre os Sauropsidas viventes.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="img-container">
+                    <img src="CrocodilePelvic.jpg" alt="Pélvis de Jacaré Lateral">
+                    <div class="img-caption">Fig 6. Cintura pélvica</div>
+                </div>
+                <div class="img-container">
+                    <img src="PelvicCrocodile2.jpg" alt="Detalhe do Acetábulo do Jacaré">
+                    <div class="img-caption">Fig 7. Detalhe da "exclusão" do Púbis!</div>
+                </div>
+            </div>
+
+            <div class="investigation-box">
+                <div class="investigation-title">Investigação Crítica:</div>
+                <ul>
+                    <li>Olhe atentamente para o <strong>Forame Acetabular</strong> na Fig 7. Siga a linha que aponta para o <strong>Púbis</strong>.</li>
+                    <li><strong>A Pergunta:</strong> O osso Púbis participa da formação do acetábulo? Ou ele está "excluído" da articulação?</li>
+                    <li>Compare isso com a Fig 5 (Lagarto). Qual a diferença fundamental na arquitetura mecânica dessas duas cinturas?</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ESTAÇÃO 5: AVES -->
+        <section id="station5">
+            <h2>VI. Aves: A Tríade do Voo</h2>
+            <p>O esqueleto apendicular da cintura peitoral das aves é altamente modificado para ancorar os poderosos músculos peitorais.</p>
+
+            <div class="img-container">
+                <img src="PectoralBirds.jpg" alt="Cintura Peitoral de Ave">
+                <div class="img-caption">Fig 8. Cintura Escapular de Ave (Vista Lateral)</div>
+            </div>
+
+            <div class="investigation-box">
+                <div class="investigation-title">Desafio de Observação:</div>
+                <ul>
+                    <li>Identifique o osso <strong>Coracóide</strong>. Ele parece uma lâmina fina ou uma "coluna" robusta? Pense na função dele como um suporte que impede que o peito colapse quando as asas batem.</li>
+                    <li>Localize a <strong>Fúrcula</strong> (clavículas fundidas). Qual função associada à sua forma em "V"? </li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="jogo">
+            <h2>VII. Jogo de Consolidação</h2>
+            <p>Associe a característica ou osso ao grupo de vertebrados onde ele é mais proeminente ou apresenta uma configuração específica.</p>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Característica Anatómica</th>
+                            <th>Grupo Principal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Conexão direta da cintura escapular com o crânio (via pós-temporal)</td>
+                            <td data-correct="Peixes"><select class="interactive-select"><option value="">Selecione...</option><option>Peixes</option><option>Anfíbios</option><option>Crocodilianos</option><option>Aves</option><option>Mamíferos</option></select></td>
+                        </tr>
+                        <tr>
+                            <td>Púbis excluído da formação do acetábulo</td>
+                            <td data-correct="Crocodilianos"><select class="interactive-select"><option value="">Selecione...</option><option>Peixes</option><option>Anfíbios</option><option>Crocodilianos</option><option>Aves</option><option>Mamíferos</option></select></td>
+                        </tr>
+                        <tr>
+                            <td>Fusão da cintura pélvica com vértebras lombares/sacrais (Sinsacro)</td>
+                            <td data-correct="Aves"><select class="interactive-select"><option value="">Selecione...</option><option>Peixes</option><option>Anfíbios</option><option>Crocodilianos</option><option>Aves</option><option>Mamíferos</option></select></td>
+                        </tr>
+                        <tr>
+                            <td>Osso coracóide reduzido a um processo da escápula</td>
+                            <td data-correct="Mamíferos"><select class="interactive-select"><option value="">Selecione...</option><option>Peixes</option><option>Anfíbios</option><option>Crocodilianos</option><option>Aves</option><option>Mamíferos</option></select></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // Script simples para marcar o link ativo no menu conforme scroll
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('#side-nav a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - sectionHeight / 3)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        // --- JOGO INTERATIVO ---
+        const interactiveSelects = document.querySelectorAll('.interactive-select');
+        interactiveSelects.forEach(select => {
+            select.addEventListener('change', (event) => {
+                const selectedValue = event.target.value;
+                const parentCell = event.target.parentElement;
+                const correctAnswer = parentCell.dataset.correct;
+                
+                parentCell.classList.remove('correct-cell', 'incorrect-cell');
+                
+                if (selectedValue === correctAnswer) {
+                    parentCell.classList.add('correct-cell');
+                    event.target.disabled = true; // Trava o acerto
+                } else if (selectedValue !== "") {
+                    parentCell.classList.add('incorrect-cell');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
