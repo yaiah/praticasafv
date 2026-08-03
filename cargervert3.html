@@ -252,18 +252,135 @@
             color: #34495e;
         }
 
-        #floating-timer {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: var(--accent-color);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 1em;
+        
+
+        /* Estilos dos Flashcards (Layout Carrossel) */
+        .flashcards-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 25px;
+            width: 100%;
+        }
+
+        .flashcard-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            height: 280px;
+        }
+
+        .flashcard {
+            display: none; /* Oculta todos por padrão */
+            width: 100%;
+            height: 100%;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .flashcard.active {
+            display: block; /* Mostra apenas o ativo */
+        }
+
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .flashcard.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            box-sizing: border-box;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .flashcard-front {
+            background-color: var(--card-bg-color);
+            color: var(--primary-color);
+            border: 2px solid var(--secondary-color);
+            font-weight: 600;
+            font-size: 1.15em;
+        }
+
+        .flashcard-front::before {
+            content: "Clique para revelar a resposta";
+            position: absolute;
+            bottom: 15px;
+            font-size: 0.75em;
+            color: #7f8c8d;
+            font-weight: normal;
+        }
+
+        .flashcard-back {
+            background-color: var(--secondary-color);
+            color: #ffffff;
+            transform: rotateY(180deg);
+            font-size: 1.05em;
+            border: 2px solid var(--primary-color);
+        }
+        
+        .flashcard-back::before {
+            content: "Clique para ver a pergunta";
+            position: absolute;
+            bottom: 15px;
+            font-size: 0.75em;
+            color: #ecf0f1;
+            font-weight: normal;
+        }
+
+        /* Controles de Navegação dos Flashcards */
+        .flashcard-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .flashcard-controls button {
+            padding: 10px 25px;
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
             font-weight: bold;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            z-index: 1001;
+            font-size: 1em;
+            transition: background-color 0.3s;
+        }
+
+        .flashcard-controls button:hover:not(:disabled) {
+            background-color: var(--secondary-color);
+        }
+
+        .flashcard-controls button:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .card-counter {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.1em;
+            min-width: 60px;
+            text-align: center;
         }
 
         /* Rodapé */
@@ -307,6 +424,7 @@
             <li><a href="#step2">III. A Fronteira Craniata</a></li>
             <li><a href="#proposicao">IV. Proposições</a></li>
             <li><a href="#sintese">V. Síntese</a></li>
+            <li><a href="#flashcards">VI. Flashcards de Revisão</a></li>
         </ul>
     </nav>
 
@@ -316,12 +434,12 @@
             <h2>Uma investigação sobre nossas origens</h2>
         </header>
 
-        <div id="floating-timer">Tempo: 80:00</div>
+
 
         <main>
             <section id="intro">
                 <h2><span class="step-number">I.</span> Introdução e Objetivos <span class="time-suggestion">(~10 min)</span></h2>
-                <p>Bem-vindo, explorador(a) da diversidade animal! Nesta aula prática, nossa missão é desvendar as características que definem o grupo <strong>Vertebrata</strong>, situando-o em seu devido lugar na árvore da vida. Ao final dos 80 minutos, você será capaz de:</p>
+                <p>Bem-vindo, explorador(a) da diversidade animal! Nesta aula prática, nossa missão é desvendar as características que define o grupo <strong>Vertebrata</strong>, situando-o em seu devido lugar na árvore da vida. Ao final dos 80 minutos, você será capaz de:</p>
                 <ul>
                     <li>Identificar as apomorfias (novidades evolutivas) chave dos vertebrados.</li>
                     <li>Diferenciar um vertebrado de outros cordados e deuterostomados.</li>
@@ -374,7 +492,7 @@
 
             <section id="step2">
                 <h2><span class="step-number">III.</span> A Fronteira: O Surgimento dos Craniata <span class="time-suggestion">(~20 min)</span></h2>
-                <p>Agora, vamos analisar um animal que representa os primeiros passos na evolução dos vertebrados: a lampreia. O grupo ao qual ela pertence (Agnatha) é o mais basal dos vertebrados vivos. Ela é um <strong>Craniata<strong>, mas não um <strong>Gnathostomata</strong> (vertebrado com mandíbula).</p>
+                <p>Agora, vamos analisar um animal que representa os primeiros passos na evolução dos vertebrados: a lampreia. O grupo ao qual ela pertence (Agnatha) é o mais basal dos vertebrados vivos. Ela é um <strong>Craniata</strong>, mas não um <strong>Gnathostomata</strong> (vertebrado com mandíbula).</p>
                
                 <article>
                     <h3>A. A Lampreia e o Crânio</h3>
@@ -390,7 +508,7 @@
                     <div class="instruction-box">
                         <p><strong>Re-examine a Lampreia:</strong> Se "vertebrado" significa "aquele que tem vértebras", a lampreia se encaixa perfeitamente? </p>
                          <ul>
-                            <li>Ela não possui uma coluna vertebral ossificada como a nossa. Em vez disso, apresenta apenas pequenas peças de cartilagem posicionadas dorsalmente sobre a notocorda. 
+                            <li>Ela não possui uma coluna vertebral ossificada como a nossa. Em vez disso, apresenta apenas pequenas peças de cartilagem posicionadas dorsalmente sobre a notocorda.</li>
                             <li><strong>Ponto de Reflexão:</strong> Se os primeiros vertebrados não tinham vértebras "típicas", a presença de vértebras é realmente a melhor característica para definir o grupo como um todo? Ou a presença do <strong>crânio</strong> (Craniata) seria uma apomorfia mais universal e, portanto, mais adequada?</li>
                         </ul>
                     </div>
@@ -418,8 +536,8 @@
                     </article>
                     <article>
                         <h4>Répteis e Aves</h4>
-                        <p>Explore a diversidade de formas de crânios e colunas vertebrais nos espécimes de lagartos, serpentes, tartarugas e aves.
-                         <img src="bskull.jpg" alt="[Imagem de crânio de ave]">
+                        <p>Explore a diversidade de formas de crânios e colunas vertebrais nos espécimes de lagartos, serpentes, tartarugas e aves.</p>
+                        <img src="bskull.jpg" alt="[Imagem de crânio de ave]">
                     </article>
                     <article>
                         <h4>Mamíferos</h4>
@@ -428,6 +546,7 @@
                     </article>
                 </div>
             </section>
+
             <section id="proposicao">
                 <h2><span class="step-number">II.</span> Proposição 1: "A Notocorda é a característica que une os Chordata, mas não é exclusiva deles."</h2>
                 <h3 class="context-title">Investigando o Plano Corporal Chordata</h3>
@@ -545,37 +664,108 @@
                 </div>
                 <p>Ao final desta investigação, você não apenas decorou as características dos vertebrados, mas as descobriu através da análise comparativa, exatamente como os primeiros anatomistas fizeram.</p>
             </section>
+
+            <!-- ============================================== -->
+            <!-- NOVA SEÇÃO DE FLASHCARDS INTERATIVOS (CARROSSEL)-->
+            <!-- ============================================== -->
+            <section id="flashcards">
+                <h2><span class="step-number">VI.</span> Flashcards de Revisão: Apomorfias dos Vertebrados <span class="time-suggestion">(~15 min)</span></h2>
+                <p>Fixe o conhecimento! Leia a pergunta, tente responder mentalmente e clique no cartão para revelar a resposta. Use os botões abaixo para navegar entre as questões.</p>
+                
+                <div class="flashcards-container">
+                    <div class="flashcard-wrapper">
+                        <!-- Flashcard 1 -->
+                        <div class="flashcard">
+                            <div class="flashcard-inner">
+                                <div class="flashcard-front">Qual estrutura esquelética que envolve o encéfalo é uma apomorfia definidora dos vertebrados?</div>
+                                <div class="flashcard-back">É o crânio (seja ele ósseo, cartilaginoso ou fibroso), que protege o cérebro e, junto com as vértebras e os suportes branquiais, constitui o endoesqueleto do animal.</div>
+                            </div>
+                        </div>
+                        <!-- Flashcard 2 -->
+                        <div class="flashcard">
+                            <div class="flashcard-inner">
+                                <div class="flashcard-front">Qual é a relação anatômica entre a cabeça e a notocorda que distingue os vertebrados dos outros cordados?</div>
+                                <div class="flashcard-back">Nos vertebrados, a cabeça se estende além da extremidade anterior da notocorda. Nos cordados não-vertebrados (como os lanceletes), a notocorda se estende até o limite anterior da cabeça.</div>
+                            </div>
+                        </div>
+                        <!-- Flashcard 3 -->
+                        <div class="flashcard">
+                            <div class="flashcard-inner">
+                                <div class="flashcard-front">Como se organiza o encéfalo dos vertebrados em comparação com os cordados basais?</div>
+                                <div class="flashcard-back">O encéfalo dos vertebrados é tripartido, apresentando limites estritos que definem o cérebro anterior (prosencéfalo), médio (mesencéfalo) e posterior (rombencéfalo), além de estar associado a órgãos sensoriais multicelulares complexos (nariz, olhos e ouvidos).</div>
+                            </div>
+                        </div>
+                        <!-- Flashcard 4 -->
+                        <div class="flashcard">
+                            <div class="flashcard-inner">
+                                <div class="flashcard-front">Qual inovação no tecido cartilaginoso serve como apomorfia para os vertebrados?</div>
+                                <div class="flashcard-back">A cartilagem dos vertebrados é celular, enquanto a cartilagem dos cordados não-vertebrados é acicular ou acelular.</div>
+                            </div>
+                        </div>
+                        <!-- Flashcard 5 -->
+                        <div class="flashcard">
+                            <div class="flashcard-inner">
+                                <div class="flashcard-front">Como se diferenciam os blocos musculares (miômeros) axiais dos vertebrados em relação aos cordados mais primitivos?</div>
+                                <div class="flashcard-back">Os miômeros dos vertebrados são dobrados em formato tridimensional de W. Nos cefalocordados, como o anfioxo, os miômeros apresentam um formato simples em V.</div>
+                            </div>
+                        </div>
+                        <!-- Flashcard 6 -->
+                        <div class="flashcard">
+                            <div class="flashcard-inner">
+                                <div class="flashcard-front">Qual é a origem e o desenvolvimento da glândula hipófise anterior (adeno-hipófise) nos vertebrados?</div>
+                                <div class="flashcard-back">Ela se desenvolve de forma coordenada a partir do crescimento da ectoderme que reveste o teto da boca, a qual migra para cima e se une à porção posterior (neuro-hipófise) que cresce para baixo a partir do diencéfalo do cérebro.</div>
+                            </div>
+                        </div>
+                        <!-- Flashcard 7 -->
+                        <div class="flashcard">
+                            <div class="flashcard-inner">
+                                <div class="flashcard-front">Que mineral específico e exclusivo os vertebrados depositam para formar seus tecidos rígidos?</div>
+                                <div class="flashcard-back">É o fosfato de cálcio na forma de cristais de hidroxiapatita, depositado sobre uma matriz orgânica de fibras de colágeno para produzir ossos, cartilagem mineralizada, dentina, esmalte, esmaltoide e cimento.</div>
+                            </div>
+                        </div>
+                        <!-- Flashcard 8 -->
+                        <div class="flashcard">
+                            <div class="flashcard-inner">
+                                <div class="flashcard-front">Quais são as duas novidades embrionárias exclusivas dos vertebrados das quais derivam a maior parte de suas inovações morfológicas?</div>
+                                <div class="flashcard-back">São as células da crista neural (que migram para formar grande parte da cabeça, ossos da mandíbula, dentes e derme) e os placódios epidérmicos (espessamentos da ectoderme que originam os órgãos dos sentidos especiais da cabeça e estruturas cutâneas).</div>
+                            </div>
+                        </div>
+                        <!-- Flashcard 9 -->
+                        <div class="flashcard">
+                            <div class="flashcard-inner">
+                                <div class="flashcard-front">Que mudança funcional ocorreu na faringe dos vertebrados na transição dos cordados não-vertebrados?</div>
+                                <div class="flashcard-back">Ocorreu a muscularização da faringe, que passou de uma estrutura passiva voltada à filtração ciliar de alimentos para uma bomba muscular ativa, utilizando os arcos faríngeos primariamente para a respiração ativa por meio de brânquias.</div>
+                            </div>
+                        </div>
+                        <!-- Flashcard 10 -->
+                        <div class="flashcard">
+                            <div class="flashcard-inner">
+                                <div class="flashcard-front">Como o genoma dos vertebrados se modificou para permitir o controle e a regulação de um plano corporal tão complexo?</div>
+                                <div class="flashcard-back">Ocorreu a duplicação (ou quadruplicação) de todo o complexo de genes Hox durante a evolução, além da adição de uma quantidade significativamente maior de pequenos RNAs reguladores, os microRNAs.</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Controles de Navegação -->
+                    <div class="flashcard-controls">
+                        <button id="prevCard" disabled>&#8592; Anterior</button>
+                        <span class="card-counter" id="cardCounter">1 / 10</span>
+                        <button id="nextCard">Próximo &#8594;</button>
+                    </div>
+                </div>
+            </section>
+            <!-- FIM DA SEÇÃO DE FLASHCARDS -->
+
         </main>
         <footer>
             <p>Este roteiro foi desenvolvido por Conrado Galdino e Alex Braga. v0.1</p>
             <p><a href="https://yaiah.github.io/praticasafv/">Web site praticasafv</a> © 2025 by <a href="https://creativecommons.org">Conrado Galdino</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></p>
-            
         </footer>
     </div>
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- CRONÔMETRO FLUTUANTE ---
-            const timerDisplay = document.getElementById('floating-timer');
-            if (timerDisplay) {
-                let totalTime = 80 * 60; // 80 minutos em segundos
-
-                const countdown = setInterval(() => {
-                    if (totalTime <= 0) {
-                        clearInterval(countdown);
-                        timerDisplay.textContent = "Tempo Esgotado!";
-                        return;
-                    }
-
-                    totalTime--;
-                    const minutes = Math.floor(totalTime / 60);
-                    let seconds = totalTime % 60;
-                    seconds = seconds < 10 ? '0' + seconds : seconds;
-                    timerDisplay.textContent = `Tempo: ${minutes}:${seconds}`;
-
-                }, 1000);
-            }
-            
+           
             // --- NAVEGAÇÃO ATIVA ---
             const sections = document.querySelectorAll('section');
             const navLinks = document.querySelectorAll('#side-nav a');
@@ -611,8 +801,58 @@
                     }
                 });
             });
+
+            // --- LÓGICA DO CARROSSEL DE FLASHCARDS ---
+            const flashcards = document.querySelectorAll('.flashcard');
+            const prevBtn = document.getElementById('prevCard');
+            const nextBtn = document.getElementById('nextCard');
+            const counterDisplay = document.getElementById('cardCounter');
+            let currentCardIndex = 0;
+
+            function updateFlashcards() {
+                flashcards.forEach((card, index) => {
+                    if (index === currentCardIndex) {
+                        card.classList.add('active');
+                    } else {
+                        card.classList.remove('active');
+                        card.classList.remove('flipped'); // Desvira o cartão ao esconder
+                    }
+                });
+                
+                // Atualiza o contador
+                counterDisplay.textContent = `${currentCardIndex + 1} / ${flashcards.length}`;
+                
+                // Gerencia o estado dos botões
+                prevBtn.disabled = currentCardIndex === 0;
+                nextBtn.disabled = currentCardIndex === flashcards.length - 1;
+            }
+
+            // Inicializa os botões de navegação
+            if (flashcards.length > 0) {
+                updateFlashcards();
+
+                prevBtn.addEventListener('click', () => {
+                    if (currentCardIndex > 0) {
+                        currentCardIndex--;
+                        updateFlashcards();
+                    }
+                });
+
+                nextBtn.addEventListener('click', () => {
+                    if (currentCardIndex < flashcards.length - 1) {
+                        currentCardIndex++;
+                        updateFlashcards();
+                    }
+                });
+
+                // Lógica de virar o cartão
+                flashcards.forEach(card => {
+                    card.addEventListener('click', () => {
+                        card.classList.toggle('flipped');
+                    });
+                });
+            }
         });
     </script>
 </body>
 </html>
-
